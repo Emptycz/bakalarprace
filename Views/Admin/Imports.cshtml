@@ -1,0 +1,15 @@
+﻿@{
+  
+  foreach (CsvRow row in ViewBag.Records)
+    {
+        
+        <p>@row.Cas</p>
+        <p>@row.Datum</p>
+        <p>@row.Vysledek</p>
+        <p> FE: @row.Fe</p>
+        <p> FE_Adv: @row.Fe_Advanced</p>
+        <hr />
+    }
+  
+
+}

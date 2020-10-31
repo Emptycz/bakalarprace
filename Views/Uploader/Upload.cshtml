@@ -1,0 +1,44 @@
+﻿@model BakalarPrace.Models.Uploader
+
+@{
+    ViewData["Title"] = "Uploader";
+}
+
+<h1>Uploader</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert @Model.AlertStatus" role="alert">
+            @Model.Status
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <form asp-controller="Uploader" asp-action="Upload" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="delimeter"> Vyberte oddělovač: </label>
+                <select name="Delimeter" id="delimeter" style="width: 8vw">
+                    <option value=";"> Středník " ; " </option>
+                    <option value=','> Čárka " , "</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="file" name="File" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
