@@ -24,32 +24,39 @@ namespace BakalarPrace.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Imports()
+        public IActionResult Imports()
         {
-
-            /*
-            var records = csv.GetRecords<dynamic>();
-            Console.WriteLine(string.Join(", ", records));
-            Console.WriteLine("ExpandoObject inherits from :" + typeof(ExpandoObject));
-            ViewBag.Records = records.ToList();
+            Database db = new Database();
+            List<Record> rc = db.GetRecords();
+            ViewBag.Records = rc;
             return View();
-            */
+        }
+
+        [HttpPost]
+        public IActionResult Imports(string h)
+        {
             var reader = new StreamReader("wwwroot/uploads/3d25a565-602a-4478-8b64-c587249595c1.csv");
             var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-                
+
             csv.Configuration.Delimiter = ";";
             csv.Configuration.HasHeaderRecord = true;
             csv.Configuration.HeaderValidated = null;
             csv.Configuration.MissingFieldFound = null;
-            
+
             var records = csv.GetRecords<CsvRow>();
             ViewBag.Records = records.ToList();
             Database db = new Database();
-            await db.AddReport(0, "Test", records.ToList());
+            db.AddReport(0, "Test", ViewBag.Records);
             return View();
         }
 
-        
+        [HttpGet]
+        public IActionResult ShowRecord(int RecordId)
+        {
+            Database db = new Database();
+            Record rc = db.GetDetailedRecord(RecordId);
+            return View(rc);
+        }
 
     }
 }

@@ -1,0 +1,23 @@
+﻿@model BakalarPrace.Models.Record
+
+<table>
+    <thead>
+        <tr>
+            <th> Datum </th>
+            <th> Čas </th>
+            <th> Výsledek </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ 
+            foreach(CsvRow row in Model.CSV)
+            {
+                <tr>
+                    <td> @row.Datum </td>
+                    <td> @row.Cas </td>
+                    <td> @row.Vysledek </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

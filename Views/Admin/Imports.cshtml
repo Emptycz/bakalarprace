@@ -1,15 +1,28 @@
-﻿@{
-  
-  foreach (CsvRow row in ViewBag.Records)
-    {
-        
-        <p>@row.Cas</p>
-        <p>@row.Datum</p>
-        <p>@row.Vysledek</p>
-        <p> FE: @row.Fe</p>
-        <p> FE_Adv: @row.Fe_Advanced</p>
-        <hr />
-    }
-  
+﻿@model BakalarPrace.Models.Record
+    <table class="table">
+        <thead>
+            <tr>
+                <th> ID Záznamu </th>
+                <th> Autor záznamu </th>
+                <th> Datum nahrání </th>
+                <th> Lokace </th>
+                <th> Operace </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ 
+                foreach(Record rc in ViewBag.Records)
+                {
+                    <tr>
+                        <td> @rc.ID </td>
+                        <td> @rc.Author.Firstname</td>
+                        <td> @rc.Uploaded </td>
+                        <td> @rc.Location </td>
+                        <td> <a class="btn" href="/Admin/ShowRecord?RecordId=@rc.ID"> <i class="material-icons" style="color: green"> zoom_out_map </i> </a> </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>    
 
-}
+
