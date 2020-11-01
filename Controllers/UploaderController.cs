@@ -12,12 +12,20 @@ using BakalarPrace.Data;
 using CsvHelper;
 using BakalarPrace.ExceptionModel;
 using BakalarPrace.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace BakalarPrace.Controllers
 {
     [ViewLayout("_AdminLayout")]
     public class UploaderController : Controller
     {
+        private readonly SignInManager<IdentityUser> _signInManager;
+
+        public UploaderController(SignInManager<IdentityUser> signInManager)
+        {
+            _signInManager = signInManager;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -80,7 +88,12 @@ namespace BakalarPrace.Controllers
             var records = csv.GetRecords<CsvRow>();
             var data = records.ToList();
             Database db = new Database();
-            LogMessage lm = db.AddReport(0, location, data);
+
+            //Získání přihlášeného uživatele
+            var email = _signInManager.Context.User.Identity.Name;
+            User user = db.GetUserByEmail(email);
+
+            LogMessage lm = db.AddReport(user.ID, location, data);
             new Alerter(lm, HttpContext);
             return true;
         }

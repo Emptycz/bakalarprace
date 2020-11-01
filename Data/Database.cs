@@ -64,6 +64,47 @@ namespace BakalarPrace.Data
             }
         }
 
+        public User GetUserByEmail(string Email)
+        {
+            using (var db = new AppDb())
+            {
+                db.Connection.Open();
+                try
+                {
+                    using (var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "SELECT ID, Firstname, Surname, Email, Level FROM User WHERE Email = @email";
+                        cmd.Parameters.AddWithValue("@email", Email);
+                        var reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            int id;
+                            string fname;
+                            string sname;
+                            string email;
+                            string level;
+                            while (reader.Read())
+                            {
+                                try { id = reader.GetInt32(0); } catch (Exception) { id = 0; }
+                                try { fname = reader.GetString(1); } catch (Exception) { fname = null; }
+                                try { sname = reader.GetString(2); } catch (Exception) { sname = null; }
+                                try { email = reader.GetString(3); } catch (Exception) { email = null; }
+                                try { level = reader.GetString(4); } catch (Exception) { level = null; }
+                                return new User(id, fname, sname, email, level);
+                            }
+                        }
+                        return new User();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Došlo k chybě při získání uživatele z databáze: " + ex.Message);
+                    return new User();
+                }
+            }
+        }
+
         public bool RegisterUser(User user)
         {
             using (var db = new AppDb())
