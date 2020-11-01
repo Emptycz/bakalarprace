@@ -30,7 +30,7 @@ namespace BakalarPrace.Models
             AlertStatus = "alert-danger";
         }
 
-        public void CheckUpload(string fileName)
+        public bool CheckUpload(string fileName)
         {
             string path = "wwwroot/uploads/" + fileName;
             bool existenceOfFile = File.Exists(path);
@@ -39,11 +39,13 @@ namespace BakalarPrace.Models
                 FileName = fileName;
                 Status = "Soubor byl úspěšně nahrán. Oddělovač je: " + Delimeter;
                 AlertStatus = "alert-success";
+                return true;
             }
             else
             {
                 Status = "Soubor nebyl nalezen";
                 AlertStatus = "alert-danger";
+                return false;
             }
 
         }

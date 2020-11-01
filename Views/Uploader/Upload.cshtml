@@ -25,18 +25,22 @@
                     <option value=','> Čárka " , "</option>
                 </select>
             </div>
+            <span> Lokace:  </span>
+            <div class="form-group">
+                <input type="text" name="Location"/>
+            </div>
             <div class="form-group">
                 <input type="file" name="File" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Nahrát záznam" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Imports" asp-controller="Admin">Zpět na rozpis záznamů</a>
 </div>
 
 @section Scripts {

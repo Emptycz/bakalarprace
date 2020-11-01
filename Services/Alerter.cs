@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BakalarPrace.Extensions;
+using BakalarPrace.ExceptionModel;
 
 namespace BakalarPrace.Services
 {
@@ -41,6 +42,14 @@ namespace BakalarPrace.Services
             this._createMessage();
         }
 
+        public Alerter(LogMessage lm, HttpContext http)
+        {
+            Text = lm.Message;
+            Status = lm.Status;
+            this._setClass();
+            _http = http;
+            Title = lm.Name;
+        }
         public bool CheckMessageExistence()
         {
             if (_http.Request.Cookies["SystemResponse.Cookie"] == null)

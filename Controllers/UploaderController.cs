@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using BakalarPrace.Extensions;
 using System.Globalization;
+using BakalarPrace.Data;
+using CsvHelper;
+using BakalarPrace.ExceptionModel;
+using BakalarPrace.Services;
 
 namespace BakalarPrace.Controllers
 {
@@ -26,7 +30,7 @@ namespace BakalarPrace.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upload(IFormFile file, string Delimeter)
+        public IActionResult Upload(IFormFile file, string Delimeter, string Location)
         {
             Uploader uploader = new Uploader();
             uploader.Delimeter = Delimeter;
@@ -49,10 +53,36 @@ namespace BakalarPrace.Controllers
                 }
 
                 //Check status of upload
-                uploader.CheckUpload(FileName);
+                bool result = uploader.CheckUpload(FileName);
+                if (result)
+                {
+                    this._processCSV(FileName, Location, Delimeter);
+                    return RedirectToAction("Imports", "Admin");
+                }
+                else
+                {
+                    return View(uploader);
+                }
             }
-
             return View(uploader);
+        }
+
+        private bool _processCSV(string filename, string location, string delimeter = ";")
+        {
+            var reader = new StreamReader("wwwroot/uploads/"+filename);
+            var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+
+            csv.Configuration.Delimiter = delimeter;
+            csv.Configuration.HasHeaderRecord = true;
+            csv.Configuration.HeaderValidated = null;
+            csv.Configuration.MissingFieldFound = null;
+
+            var records = csv.GetRecords<CsvRow>();
+            var data = records.ToList();
+            Database db = new Database();
+            LogMessage lm = db.AddReport(0, location, data);
+            new Alerter(lm, HttpContext);
+            return true;
         }
 
     }

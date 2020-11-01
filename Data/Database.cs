@@ -64,6 +64,112 @@ namespace BakalarPrace.Data
             }
         }
 
+        public bool RegisterUser(User user)
+        {
+            using (var db = new AppDb())
+            {
+                db.Connection.Open();
+                try
+                {
+                    using (var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "INSERT INTO User (Firstname, Surname, Email, Level, Password) VALUES (@fname, @sname, @email, @level, @password)";
+                        cmd.Parameters.AddWithValue("@email", user.Email);
+                        cmd.Parameters.AddWithValue("@password", user.Password);
+                        cmd.Parameters.AddWithValue("@fname", user.Firstname);
+                        cmd.Parameters.AddWithValue("@sname", user.Lastname);
+                        cmd.Parameters.AddWithValue("@level", "User");
+                        var reader = cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Nastala chyba při registrace uživatele: " + ex.Message);
+                    return false;
+                }
+            }
+        }
+
+        public bool VerifyUserExistenceByEmail(string email)
+        {
+            using (var db = new AppDb())
+            {
+                db.Connection.Open();
+                try
+                {
+                    using (var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "SELECT 1 FROM User WHERE Email = @email";
+                        cmd.Parameters.AddWithValue("@email", email);
+                        var reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Došlo k chybě při ověření existence uživatele v databázi: " + ex.Message);
+                    return false;
+                }
+            }
+        }
+
+        public User LoginUser(string email, string password)
+        {
+            using(var db = new AppDb())
+            {
+                db.Connection.Open();
+                try
+                {
+                    using(var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "SELECT ID, Firstname, Surname, Email, Level FROM User WHERE Email = @email AND Password = @pswd";
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.Parameters.AddWithValue("@pswd", password);
+                        var reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            int id = 0;
+                            string fname = null;
+                            string sname = null;
+                            string Email = null;
+                            string level = null;
+                            while (reader.Read())
+                            {
+                                try { id = reader.GetInt32(0); } catch (Exception) { id = 0; }
+                                try { fname = reader.GetString(1); } catch (Exception) { fname = null; }
+                                try { sname = reader.GetString(2); } catch (Exception) { sname = null; }
+                                try { Email = reader.GetString(3); } catch (Exception) { Email = null; }
+                                try { level = reader.GetString(4); } catch (Exception) { level = null; }
+
+                            }
+                            return new User(id, fname, sname, Email, level);
+
+                        }
+                        else
+                        {
+                            return new User();
+                        }
+                    }
+                }catch(Exception ex)
+                {
+                    Console.WriteLine("Nastala chyba při loginu uživatele: " + ex.Message);
+                    return new User();
+                }
+            }
+        }
+
         public List<Record> GetRecords()
         {
             using (var db = new AppDb())
@@ -74,7 +180,7 @@ namespace BakalarPrace.Data
                     using(var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location FROM Record";
+                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location FROM Record ORDER BY ID DESC";
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
                         {

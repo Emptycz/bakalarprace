@@ -1,5 +1,33 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<div class="row loginPage">
+    <div class="col"></div>
+    <div class="col-3">
+        @if (ViewBag.User != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.User.Message
+            </div>
+        }
+        <h1 class="text-center"> Přihlášení do systému </h1>
+        <form method="post" action="/Account/Login">
+            <div class="form-group row">
+                <div class="col-12 input-box">
+                    <input type="email" name="username" placeholder="Váš e-mail" class="form-control input-field" />
+                </div>
+                <div class="col-12 input-box">
+                    <input name="password" type="password" placeholder="Vaše heslo" class="form-control input-field" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col">
+                    <button class="btn-circle" type="submit" name="submit" value="login"> Přihlásit </button>
+                </div>
+                <div class="col"></div>
+            </div>
+        </form>
+    </div>
+    <div class="col"></div>
+</div>
+
+
+

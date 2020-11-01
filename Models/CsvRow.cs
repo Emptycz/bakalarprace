@@ -9,6 +9,8 @@ namespace BakalarPrace.Models
 {
     public class CsvRow
     {
+        public int ID { get; set; }
+        public int RowNumber { get; set; }
         [Name("Datum")]
         public string Datum { get; set; }
         [Name("Cas")]   
@@ -255,8 +257,16 @@ namespace BakalarPrace.Models
         public string Pole16_Hodnota { get; set; }
 
         //string datum, string cas,
-        public CsvRow(int ID, int RowNumber, string datum, string cas, string vysledek, string mod, string nejlepsi_shoda, string nejlepsi_shoda_MN, string nejlepsi_shoda2, string nejlepsi_shoda2_MN, string nejlepsi_shoda3, string nejlepsi_shoda3_MN, string uplynuly_cas_1, string uplynuly_cas_2, string cas_celkem, string lOD, string pole1, string pole1_Hodnota, string pole2, string pole2_Hodnota, string pole3, string pole3_Hodnota, string pole4, string pole4_Hodnota, string pole5, string pole5_Hodnota, string pole6, string pole6_Hodnota, string pole7, string pole7_Hodnota, string pole8, string pole8_Hodnota, string pole9, string pole9_Hodnota, string pole10, string pole10_Hodnota, string pole11, string pole11_Hodnota, string pole12, string pole12_Hodnota, string pole13, string pole13_Hodnota, string pole14, string pole14_Hodnota, string pole15, string pole15_Hodnota, string pole16, string pole16_Hodnota, string mg, string mg_Advanced, string al, string al_Advanced, string si, string si_Advanced, string p, string p_Advanced, string s, string advanced, string cl, string cl_Advanced, string k, string k_Advanced, string ca, string ca_Advanced, string ti, string ti_Advanced, string cr, string cr_Advanced, string mn, string mn_Advanced, string fe, string fe_Advanced, string co, string co_Advanced, string ni, string ni_Advanced, string cu, string cu_Advanced, string zn, string zn_Advanced, string @as, string as_Advanced, string se, string se_Advanced, string rb, string rb_Advanced, string sr, string sr_Advanced, string y, string y_Advanced, string zr, string zr_Advanced, string mo, string mo_Advanced, string ag, string ag_Advanced, string cd, string cd_Advanced, string @in, string in_Advanced, string sn, string sn_Advanced, string sb, string sb_Advanced, string ba, string ba_Advanced, string w, string w_Advanced, string au, string au_Advanced, string hg, string hg_Advanced, string tl, string tl_Advanced, string pb, string pb_Advanced, string bi, string bi_Advanced, string th, string th_Advanced, string u, string u_Advanced, string lE, string lE_Advanced)
+
+        public CsvRow()
         {
+
+        }
+
+        public CsvRow(int id, int rowNumber, string datum, string cas, string vysledek, string mod, string nejlepsi_shoda, string nejlepsi_shoda_MN, string nejlepsi_shoda2, string nejlepsi_shoda2_MN, string nejlepsi_shoda3, string nejlepsi_shoda3_MN, string uplynuly_cas_1, string uplynuly_cas_2, string cas_celkem, string lOD, string pole1, string pole1_Hodnota, string pole2, string pole2_Hodnota, string pole3, string pole3_Hodnota, string pole4, string pole4_Hodnota, string pole5, string pole5_Hodnota, string pole6, string pole6_Hodnota, string pole7, string pole7_Hodnota, string pole8, string pole8_Hodnota, string pole9, string pole9_Hodnota, string pole10, string pole10_Hodnota, string pole11, string pole11_Hodnota, string pole12, string pole12_Hodnota, string pole13, string pole13_Hodnota, string pole14, string pole14_Hodnota, string pole15, string pole15_Hodnota, string pole16, string pole16_Hodnota, string mg, string mg_Advanced, string al, string al_Advanced, string si, string si_Advanced, string p, string p_Advanced, string s, string advanced, string cl, string cl_Advanced, string k, string k_Advanced, string ca, string ca_Advanced, string ti, string ti_Advanced, string cr, string cr_Advanced, string mn, string mn_Advanced, string fe, string fe_Advanced, string co, string co_Advanced, string ni, string ni_Advanced, string cu, string cu_Advanced, string zn, string zn_Advanced, string @as, string as_Advanced, string se, string se_Advanced, string rb, string rb_Advanced, string sr, string sr_Advanced, string y, string y_Advanced, string zr, string zr_Advanced, string mo, string mo_Advanced, string ag, string ag_Advanced, string cd, string cd_Advanced, string @in, string in_Advanced, string sn, string sn_Advanced, string sb, string sb_Advanced, string ba, string ba_Advanced, string w, string w_Advanced, string au, string au_Advanced, string hg, string hg_Advanced, string tl, string tl_Advanced, string pb, string pb_Advanced, string bi, string bi_Advanced, string th, string th_Advanced, string u, string u_Advanced, string lE, string lE_Advanced)
+        {
+            ID = id;
+            RowNumber = rowNumber;
             Datum = datum;
             Cas = cas;
             Vysledek = vysledek;

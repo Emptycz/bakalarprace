@@ -15,7 +15,7 @@ using BakalarPrace.Data;
 
 namespace BakalarPrace.Controllers
 {
-   //[Authorize]
+   [Authorize]
    [ViewLayout("_AdminLayout")]
     public class AdminController : Controller
     {

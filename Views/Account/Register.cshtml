@@ -1,0 +1,22 @@
+﻿@model BakalarPrace.Models.User
+@{ 
+    if(Model.Message != null)
+    {
+        <div class="error bg-danger">
+            <p> @Model.Message </p>
+        </div>
+    }
+}
+<form method="post" asp-action="Register" asp-controller="Account">
+    <div class="form-group">
+        <input type="text" placeholder="Vaše křestní jméno" asp-for="@Model.Firstname" required/>
+        <input type="text" placeholder="Vaše příjmení" asp-for="@Model.Lastname" required/>
+        <input type="email" placeholder="Email" asp-for="@Model.Email" required/>
+
+    </div>
+    <div class="form-group">
+        <input type="password" placeholder="Heslo" asp-for="@Model.Password" required/>
+        <input type="password" placeholder="Znovu heslo" name="verifyPassword" required/>
+    </div>
+    <button type="submit" value="submit" name="submit"> Registrovat se </button>
+</form>
