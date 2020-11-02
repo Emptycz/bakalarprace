@@ -103,7 +103,7 @@ namespace BakalarPrace.Controllers
             //Zkontroluj, jestli byl uživatel nalezen v DB
             if (user.IsAuthenticated() == false)
             {
-                ViewBag.User = user;
+                ViewBag.Message = "Zadali jste špatné jméno nebo heslo.";
                 return View();
             }
 
@@ -138,6 +138,14 @@ namespace BakalarPrace.Controllers
             await _signInManager.SignInAsync(user, false);
             //await _signInManager.PasswordSignInAsync(user, user.Password, false, false);
             return RedirectToAction("Index", "Admin");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> SignOut()
+        {
+            await _signInManager.SignOutAsync();
+            new Alerter("Byl jste úspěšně odhlášen.", "Info", HttpContext);
+            return RedirectToAction("Index", "Home");
         }
     }
 }
