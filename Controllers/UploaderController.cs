@@ -88,7 +88,7 @@ namespace BakalarPrace.Controllers
             csv.Configuration.HasHeaderRecord = true;
             csv.Configuration.HeaderValidated = null;
             csv.Configuration.MissingFieldFound = null;
-
+            
             var records = csv.GetRecords<CsvRow>();
             var data = records.ToList();
             Database db = new Database();

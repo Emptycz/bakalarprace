@@ -1,29 +1,4 @@
 ﻿@model BakalarPrace.Models.Record
-<style>
-    table td, table th {
-        width: 150px;
-    }
-
-    table th:first-of-type, table td:first-of-type {
-        position: sticky;
-        left: 0px;
-        background-color: white;
-        color: black;
-    }
-
-    .table-custom {
-        width: 100%;
-        overflow-x:scroll;
-        table-layout: fixed;
-    }
-
-    .box {
-        width:100%;
-        display: block;
-        position:relative;
-        overflow-x:scroll;
-    }
-</style>    
 <a asp-action="Imports" asp-controller="Admin" class="btn bg-info"> Zpět na souhrn </a>
 <div class="box">
     <table class="table table-hover table-custom">

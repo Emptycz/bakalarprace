@@ -8,6 +8,30 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <style>
+        table td, table th {
+            width: 150px;
+        }
+
+            table th:first-of-type, table td:first-of-type {
+                position: sticky;
+                left: 0px;
+                background-color: white;
+                color: black;
+            }
+
+        .table-custom {
+            width: 100%;
+            overflow-x: scroll;
+            table-layout: fixed;
+        }
+
+        .box {
+            width: 100%;
+            display: block;
+            position: relative;
+            overflow-x: scroll;
+        }
+
         .marked{
             background-color: lightslategrey;
             color: white;
