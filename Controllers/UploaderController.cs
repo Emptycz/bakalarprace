@@ -41,6 +41,10 @@ namespace BakalarPrace.Controllers
         public IActionResult Upload(IFormFile file, string Delimeter, string Location)
         {
             Uploader uploader = new Uploader();
+            if(Delimeter == "tabulator")
+            {
+                Delimeter = "\t";
+            }
             uploader.Delimeter = Delimeter;
             if (file != null)
             {
@@ -75,7 +79,7 @@ namespace BakalarPrace.Controllers
             return View(uploader);
         }
 
-        private bool _processCSV(string filename, string location, string delimeter = ";")
+        private bool _processCSV(string filename, string location, string delimeter)
         {
             var reader = new StreamReader("wwwroot/uploads/"+filename);
             var csv = new CsvReader(reader, CultureInfo.InvariantCulture);

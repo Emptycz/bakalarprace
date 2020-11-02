@@ -51,6 +51,7 @@ namespace BakalarPrace.Controllers
         }
 
         [HttpGet]
+        [ViewLayout("_CsvExportLayout")]
         public IActionResult ShowRecord(int RecordId)
         {
             Database db = new Database();
