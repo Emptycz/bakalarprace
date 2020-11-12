@@ -24,6 +24,49 @@ namespace BakalarPrace.Data
             this._verifyConnection();
         }
 
+        public List<Record> GetFourLatestRecords()
+        {
+            using (var db = new AppDb())
+            {
+                db.Connection.Open();
+                try
+                {
+                    using (var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location FROM Record ORDER BY ID DESC LIMIT 4";
+                        var reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            List<Record> records = new List<Record>();
+                            int Id;
+                            int Aid;
+                            DateTime Uploaded;
+                            string Loc;
+                            while (reader.Read())
+                            {
+                                try { Id = reader.GetInt32(0); } catch (Exception) { Id = 0; }
+                                try { Aid = reader.GetInt32(1); } catch (Exception) { Aid = 0; }
+                                try { Uploaded = reader.GetDateTime(2); } catch (Exception) { Uploaded = DateTime.Now; }
+                                try { Loc = reader.GetString(3); } catch (Exception) { Loc = null; }
+                                records.Add(new Record(Id, Aid, Uploaded, Loc));
+                            }
+                            return records;
+                        }
+                        else
+                        {
+                            return new List<Record>();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Nastala chyba při výpisu records: " + ex.Message);
+                    return new List<Record>();
+                }
+            }
+        }
+
         public User GetUserByID(int ID)
         {
             using(var db = new AppDb())

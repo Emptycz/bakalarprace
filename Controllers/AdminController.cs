@@ -21,6 +21,8 @@ namespace BakalarPrace.Controllers
     {
         public IActionResult Index()
         {
+            Database db = new Database();
+            ViewBag.Records = db.GetFourLatestRecords();
             return View();
         }
 

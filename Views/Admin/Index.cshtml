@@ -1,3 +1,42 @@
 ﻿<div class="mx-auto">
     <h1 class="text-center"> Admin UI </h1>
 </div>
+<div class="row">
+    <div class="col">
+        <p class="text-center"> Nejnovejší importy </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th> ID záznamu </th>
+                    <th> Nahráno </th>
+                    <th> Lokace </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (Record rc in ViewBag.Records)
+                    {
+                        <tr>
+                            <td>@rc.ID</td>
+                            <td>@rc.Uploaded</td>
+                            <td>@rc.Location</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <p class="text-right btn bg-success"> <a asp-action="Imports" asp-controller="Admin" style="color:white"> Zobrazit více  </a> </p>
+    </div>
+    <div class="col">   
+        <p class="text-center"> Nějaká další tabulka </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th> xx </th>
+                    <th> xx </th>
+                    <th> xx </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>

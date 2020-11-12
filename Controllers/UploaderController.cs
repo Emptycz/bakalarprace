@@ -69,6 +69,7 @@ namespace BakalarPrace.Controllers
                 if (result)
                 {
                     this._processCSV(FileName, Location, Delimeter);
+
                     return RedirectToAction("Imports", "Admin");
                 }
                 else
