@@ -44,8 +44,10 @@ namespace BakalarPrace
 
             services.ConfigureApplicationCookie(config =>
             {
+                //config.Cookie.HttpOnly = false;
+                //config.Cookie.SameSite = "";
                 config.Cookie.Name = "Identity.Cookie";
-                config.LoginPath = "/Account/Login";
+                config.LoginPath = "/Account/Login";   
             });
 
             //Use MVC architecture

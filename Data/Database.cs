@@ -34,7 +34,7 @@ namespace BakalarPrace.Data
                     using (var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location FROM Record ORDER BY ID DESC LIMIT 4";
+                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location FROM record ORDER BY ID DESC LIMIT 4";
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
                         {
@@ -77,7 +77,7 @@ namespace BakalarPrace.Data
                     using(var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT ID, Firstname, Surname, Email, Level FROM User WHERE ID = @id";
+                        cmd.CommandText = "SELECT ID, Firstname, Surname, Email, Level FROM user WHERE ID = @id";
                         cmd.Parameters.AddWithValue("@id", ID);
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
@@ -117,7 +117,7 @@ namespace BakalarPrace.Data
                     using (var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT ID, Firstname, Surname, Email, Level FROM User WHERE Email = @email";
+                        cmd.CommandText = "SELECT ID, Firstname, Surname, Email, Level FROM user WHERE Email = @email";
                         cmd.Parameters.AddWithValue("@email", Email);
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
@@ -158,7 +158,7 @@ namespace BakalarPrace.Data
                     using (var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "INSERT INTO User (Firstname, Surname, Email, Level, Password) VALUES (@fname, @sname, @email, @level, @password)";
+                        cmd.CommandText = "INSERT INTO user (Firstname, Surname, Email, Level, Password) VALUES (@fname, @sname, @email, @level, @password)";
                         cmd.Parameters.AddWithValue("@email", user.Email);
                         cmd.Parameters.AddWithValue("@password", user.Password);
                         cmd.Parameters.AddWithValue("@fname", user.Firstname);
@@ -186,7 +186,7 @@ namespace BakalarPrace.Data
                     using (var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT 1 FROM User WHERE Email = @email";
+                        cmd.CommandText = "SELECT 1 FROM user WHERE Email = @email";
                         cmd.Parameters.AddWithValue("@email", email);
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
@@ -218,7 +218,7 @@ namespace BakalarPrace.Data
                     using(var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT ID, Firstname, Surname, Email, Level FROM User WHERE Email = @email AND Password = @pswd";
+                        cmd.CommandText = "SELECT ID, Firstname, Surname, Email, Level FROM user WHERE Email = @email AND Password = @pswd";
                         cmd.Parameters.AddWithValue("@email", email);
                         cmd.Parameters.AddWithValue("@pswd", password);
                         var reader = cmd.ExecuteReader();
@@ -264,7 +264,7 @@ namespace BakalarPrace.Data
                     using(var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location FROM Record ORDER BY ID DESC";
+                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location FROM record ORDER BY ID DESC";
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
                         {
@@ -306,7 +306,7 @@ namespace BakalarPrace.Data
                     using(var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location FROM Record WHERE ID = @id";
+                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location FROM record WHERE ID = @id";
                         cmd.Parameters.AddWithValue("@id", recordId);
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
@@ -350,7 +350,7 @@ namespace BakalarPrace.Data
                     using(var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "INSERT INTO Record (AuthorID, Location) VALUES (@aid, @location)";
+                        cmd.CommandText = "INSERT INTO record (AuthorID, Location) VALUES (@aid, @location)";
                         cmd.Parameters.AddWithValue("@aid", userId);
                         cmd.Parameters.AddWithValue("@location", location);
                         cmd.ExecuteNonQuery();
@@ -537,7 +537,7 @@ namespace BakalarPrace.Data
                     using (var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT ID, `RowNumber`, `Date`, `Time`, `Result`, `Mod`, `Best_Match`, `Best_Match_MN`, `Best_Match_2`, `Best_Match_2_MN`, `Best_Match_3`, `Best_Match_3_MN`, `Time_1`, `Time_2`, `Time_all`, `LOD Sigma`, `Key1`, `Value1`, `Key2`, `Value2`, `Key3`, `Value3`, `Key4`, `Value4`, `Key5`, `Value5`, `Key6`, `Value6`, `Key7`, `Value7`, `Key8`, `Value8`, `Key9`, `Value9`, `Key10`, `Value10`, `Key11`, `Value11`, `Key12`, `Value12`, `Key13`, `Value13`, `Key14`, `Value14`, `Key15`, `Value15`, `Key16`, `Value16`, `Mg`, `Mg_Advanced`, `Al`, `Al_Advanced`, `Si`, `Si_Advanced`, `P`, `P_Advanced`, `S`, `S_Advanced`, `Cl`, `Cl_Advanced`, `K`, `K_Advanced`, `Ca`, `Ca_Advanced`, `Ti`, `Ti_Advanced`, `Cr`, `Cr_Advanced`, `Mn`, `Mn_Advanced`, `Fe`, `Fe_Advanced`, `Co`, `Co_Advanced`, `Ni`, `Ni_Advanced`, `Cu`, `Cu_Advanced`, `Zn`, `Zn_Advanced`, `As`, `As_Advanced`, `Se`, `Se_Advanced`, `Rb`, `Rb_Advanced`, `Sr`, `Sr_Advanced`, `Y`, `Y_Advanced`, `Zr`, `Zr_Advanced`, `Mo`, `Mo_Advanced`, `Ag`, `Ag_Advanced`, `Cd`, `Cd_Advanced`, `In`, `In_Advanced`, `Sn`, `Sn_Advanced`, `Sb`, `Sb_Advanced`, `Ba`, `Ba_Advanced`, `W`, `W_Advanced`, `Au`, `Au_Advanced`, `Hg`, `Hg_Advanced`, `Tl`, `Tl_Advanced`, `Pb`, `Pb_Advanced`, `Bi`, `Bi_Advanced`, `Th`, `Th_Advanced`, `U`, `U_Advanced`, `LE`, `LE_Advanced` FROM Csv WHERE RecordID = @rId";
+                        cmd.CommandText = "SELECT ID, `RowNumber`, `Date`, `Time`, `Result`, `Mod`, `Best_Match`, `Best_Match_MN`, `Best_Match_2`, `Best_Match_2_MN`, `Best_Match_3`, `Best_Match_3_MN`, `Time_1`, `Time_2`, `Time_all`, `LOD Sigma`, `Key1`, `Value1`, `Key2`, `Value2`, `Key3`, `Value3`, `Key4`, `Value4`, `Key5`, `Value5`, `Key6`, `Value6`, `Key7`, `Value7`, `Key8`, `Value8`, `Key9`, `Value9`, `Key10`, `Value10`, `Key11`, `Value11`, `Key12`, `Value12`, `Key13`, `Value13`, `Key14`, `Value14`, `Key15`, `Value15`, `Key16`, `Value16`, `Mg`, `Mg_Advanced`, `Al`, `Al_Advanced`, `Si`, `Si_Advanced`, `P`, `P_Advanced`, `S`, `S_Advanced`, `Cl`, `Cl_Advanced`, `K`, `K_Advanced`, `Ca`, `Ca_Advanced`, `Ti`, `Ti_Advanced`, `Cr`, `Cr_Advanced`, `Mn`, `Mn_Advanced`, `Fe`, `Fe_Advanced`, `Co`, `Co_Advanced`, `Ni`, `Ni_Advanced`, `Cu`, `Cu_Advanced`, `Zn`, `Zn_Advanced`, `As`, `As_Advanced`, `Se`, `Se_Advanced`, `Rb`, `Rb_Advanced`, `Sr`, `Sr_Advanced`, `Y`, `Y_Advanced`, `Zr`, `Zr_Advanced`, `Mo`, `Mo_Advanced`, `Ag`, `Ag_Advanced`, `Cd`, `Cd_Advanced`, `In`, `In_Advanced`, `Sn`, `Sn_Advanced`, `Sb`, `Sb_Advanced`, `Ba`, `Ba_Advanced`, `W`, `W_Advanced`, `Au`, `Au_Advanced`, `Hg`, `Hg_Advanced`, `Tl`, `Tl_Advanced`, `Pb`, `Pb_Advanced`, `Bi`, `Bi_Advanced`, `Th`, `Th_Advanced`, `U`, `U_Advanced`, `LE`, `LE_Advanced` FROM csv WHERE RecordID = @rId";
                         cmd.Parameters.AddWithValue("@rId", recordID);                    
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
@@ -962,7 +962,7 @@ namespace BakalarPrace.Data
                     using(var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "DESCRIBE User";
+                        cmd.CommandText = "DESCRIBE user";
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
                         {

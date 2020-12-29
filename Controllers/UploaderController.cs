@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BakalarPrace.Controllers
 {
+    //[Authorize]
     [ViewLayout("_AdminLayout")]
     public class UploaderController : Controller
     {
@@ -40,6 +41,7 @@ namespace BakalarPrace.Controllers
         [HttpPost]
         public IActionResult Upload(IFormFile file, string Delimeter, string Location)
         {
+            Console.WriteLine("Načtení controlleru a souboru: "+file.FileName);
             Uploader uploader = new Uploader();
             if(Delimeter == "tabulator")
             {
@@ -55,17 +57,28 @@ namespace BakalarPrace.Controllers
                 }
                 //Generate file name
                 string FileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                Console.WriteLine("Vygenerováno jméno souboru");
 
                 //Generate url to save
                 string SavePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", FileName);
                 uploader.FilePath = SavePath;
-                using (var stream = new FileStream(SavePath, FileMode.Create))
-                {
-                    file.CopyTo(stream);
+                Console.WriteLine("Příprava na přesun");
+               
+                try{
+                    using (var stream = new FileStream(SavePath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }catch(Exception ex){
+                    Console.WriteLine(ex.Message);
                 }
+
+
+                Console.WriteLine("Přesun kompletní");
 
                 //Check status of upload
                 bool result = uploader.CheckUpload(FileName);
+                Console.WriteLine("Stav uploadu zkontrolován: "+result);
                 if (result)
                 {
                     this._processCSV(FileName, Location, Delimeter);
