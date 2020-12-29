@@ -49,6 +49,8 @@ namespace BakalarPrace.Services
             this._setClass();
             _http = http;
             Title = lm.Name;
+
+            this._createMessage();
         }
         public bool CheckMessageExistence()
         {

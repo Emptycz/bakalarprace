@@ -77,16 +77,66 @@ namespace BakalarPrace.Controllers
                 Console.WriteLine("Přesun kompletní");
 
                 //Check status of upload
-                bool result = uploader.CheckUpload(FileName);
+                bool result = uploader.CheckFileExistence(FileName);
                 Console.WriteLine("Stav uploadu zkontrolován: "+result);
+                List<string> delimeter = new List<string>();
+                if (Delimeter == "auto")
+                {
+                    delimeter.Add(";");
+                    delimeter.Add(",");
+                    delimeter.Add("\t");
+                }
+                else
+                {
+                    if (Delimeter == "tabulator")
+                    {
+                        Delimeter = "\t";
+                    }
+                    else
+                    {
+                        delimeter.Add(Delimeter);
+                    }
+                }
+
                 if (result)
                 {
-                    this._processCSV(FileName, Location, Delimeter);
+                    int iteration = 0;
+                    bool importDoneCorrectly = false;
+                    while (importDoneCorrectly == false)
+                    {
+                        if (this._processCSV(FileName, Location, delimeter[iteration]) == true){
+                            importDoneCorrectly = true;
+                        }
+                        else
+                        {
+                            iteration++;
+                        }
 
+                        if(iteration == delimeter.Count())
+                        {
+                            break;
+                        }
+                        Console.WriteLine(importDoneCorrectly);
+                    }
+                    if(importDoneCorrectly == false)
+                    {
+                        LogMessage lm = new LogMessage("Zpracování CSV", "500", "Nebylo možné přečíst CSV soubor. Zkustě jiný oddělovač", "Error");
+                        new Alerter(lm, HttpContext);
+                    }
+                    else
+                    {
+                        LogMessage lm = new LogMessage("Zpracování CSV", "200", "CSV bylo zpracováno a nahráno", "OK");
+                        new Alerter(lm, HttpContext);
+                    }
+                    //Odstraň CSV soubor
+                    uploader.Delete();
                     return RedirectToAction("Imports", "Admin");
                 }
                 else
                 {
+                    //Odstraň CSV soubor
+                    uploader.Delete();
+
                     return View(uploader);
                 }
             }
@@ -95,25 +145,36 @@ namespace BakalarPrace.Controllers
 
         private bool _processCSV(string filename, string location, string delimeter)
         {
-            var reader = new StreamReader("wwwroot/uploads/"+filename);
-            var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-
-            csv.Configuration.Delimiter = delimeter;
-            csv.Configuration.HasHeaderRecord = true;
-            csv.Configuration.HeaderValidated = null;
-            csv.Configuration.MissingFieldFound = null;
-            
-            var records = csv.GetRecords<CsvRow>();
-            var data = records.ToList();
             Database db = new Database();
 
-            //Získání přihlášeného uživatele
-            var email = _signInManager.Context.User.Identity.Name;
-            User user = db.GetUserByEmail(email);
+            using (var reader = new StreamReader("wwwroot/uploads/" + filename))
+            {
+                var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
 
-            LogMessage lm = db.AddReport(user.ID, location, data);
-            new Alerter(lm, HttpContext);
-            return true;
+                csv.Configuration.Delimiter = delimeter;
+                csv.Configuration.HasHeaderRecord = true;
+                csv.Configuration.HeaderValidated = null;
+                csv.Configuration.MissingFieldFound = null;
+                try
+                {
+                    var records = csv.GetRecords<CsvRow>();
+                    var data = records.ToList();
+
+                    //Získání přihlášeného uživatele
+                    var email = _signInManager.Context.User.Identity.Name;
+                    User user = db.GetUserByEmail(email);
+
+                    LogMessage lm = db.AddReport(user.ID, location, data);
+                    new Alerter(lm, HttpContext);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return false;
+                }
+                return true;
+            }
+                
         }
 
     }

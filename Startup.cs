@@ -50,6 +50,9 @@ namespace BakalarPrace
                 config.LoginPath = "/Account/Login";   
             });
 
+            services.AddScoped<Alerter>();
+
+
             //Use MVC architecture
             services.AddControllersWithViews();
          }

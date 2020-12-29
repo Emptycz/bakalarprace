@@ -12,6 +12,9 @@ using BakalarPrace.Extensions;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Authorization;
 using BakalarPrace.Data;
+using System.Reflection;
+using BakalarPrace.Services;
+using BakalarPrace.ExceptionModel;
 
 namespace BakalarPrace.Controllers
 {
@@ -49,6 +52,44 @@ namespace BakalarPrace.Controllers
             ViewBag.Records = records.ToList();
             Database db = new Database();
             db.AddReport(0, "Test", ViewBag.Records);
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult RemoveRecord(string RecordId)
+        {
+            try
+            {
+                int recordId = Int32.Parse(RecordId);
+                Database db = new Database();
+
+                LogMessage lm = db.RemoveReport(recordId);
+                new Alerter(lm, HttpContext);
+
+                return RedirectToAction("Imports", "Admin");
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return RedirectToAction("Imports", "Admin");
+            }
+        }
+
+        public IActionResult Search()
+        {
+            CsvRow cs = new CsvRow();
+            Type classType = typeof(CsvRow);
+            List<string> ClassProperties = new List<string>();
+            foreach (PropertyInfo property in classType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                //Pokud property obsahuje _hodnota, přeskoč ji, není potřeba
+                if(property.Name.Contains("_hodnota") || property.Name.Contains("_Hodnota"))
+                {
+                    continue;
+                }
+                //Přidej property do listu
+                ClassProperties.Add(property.Name);
+            }
+            ViewBag.ClassProperties = ClassProperties;
             return View();
         }
 

@@ -339,6 +339,42 @@ namespace BakalarPrace.Data
                 }
             }
         }
+
+        public LogMessage RemoveReport(int recordId)
+        {
+            if(this.VerifyRecordExistenceById(recordId) == false)
+            {
+                return new LogMessage("Odstranění záznamu", "404", "Tento záznam nebyl v databázi nalezen", "Error");
+            }
+
+            using(var db = new AppDb())
+            {
+                db.Connection.Open();
+                try
+                {
+                    using(var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "DELETE FROM CSV WHERE CSV.RecordID = @recordId";
+                        cmd.Parameters.AddWithValue("@recordId", recordId);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using(var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "DELETE FROM Record WHERE Record.ID = @recordId";
+                        cmd.Parameters.AddWithValue("@recordId", recordId);
+                        cmd.ExecuteNonQuery();
+                    }
+                    return new LogMessage("Odstranění záznamu", "200", "Záznam byl úspěšně odstraněn", "OK");
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);   
+                    return new LogMessage("Odstranění záznamu", "500", "Nastala chyba při odstranění záznamu", "ERROR");
+                }
+            }
+        }
             
         public LogMessage AddReport(int userId, string location, List<CsvRow> csv)
         {
@@ -931,6 +967,36 @@ namespace BakalarPrace.Data
                 {
                     Console.WriteLine("Nastala chyba :/ : " + ex.Message);
                     return csv;
+                }
+            }
+        }
+
+        public bool VerifyRecordExistenceById(int id)
+        {
+            using(var db = new AppDb())
+            {
+                try
+                {
+                    db.Connection.Open();
+                    using(var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "SELECT 1 FROM Record WHERE ID = @id";
+                        cmd.Parameters.AddWithValue("@id", id);
+                        var reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return false;
                 }
             }
         }

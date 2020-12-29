@@ -24,19 +24,28 @@ namespace BakalarPrace.Models
             AlertStatus = "alert-info";
         }
 
+        public Uploader(string filename)
+        {
+            FileName = filename;
+            FilePath = "wwwroot/uploads/" + FileName;
+            Status = "Čekám na upload";
+            AlertStatus = "alert-info";
+        }
+
         public void SetIncorrectExtensionMessage(string ext)
         {
             Status = "Je možné nahrát soubory pouze s příponou .csv (Váš soubor měl příponu: "+ext+")";
             AlertStatus = "alert-danger";
         }
 
-        public bool CheckUpload(string fileName)
+        public bool CheckFileExistence(string filename)
         {
-            string path = "wwwroot/uploads/" + fileName;
+            this.FileName = filename;
+            string path = "wwwroot/uploads/" + this.FileName;
             bool existenceOfFile = File.Exists(path);
             if (existenceOfFile == true)
             {
-                FileName = fileName;
+                FileName = this.FileName;
                 Status = "Soubor byl úspěšně nahrán. Oddělovač je: " + Delimeter;
                 AlertStatus = "alert-success";
                 return true;
@@ -48,6 +57,25 @@ namespace BakalarPrace.Models
                 return false;
             }
 
+        }
+
+        public bool Delete()
+        {
+            if(this.FileName == null)
+            {
+                return false;
+            }
+
+            this.FilePath = "wwwroot/uploads/" + this.FileName;
+            File.Delete(this.FilePath);
+            if (this.CheckFileExistence(this.FileName) == true)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿@using static BakalarPrace.Extensions.NavSelector 
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject BakalarPrace.Services.Alerter Alerter
+@using static BakalarPrace.Extensions.NavSelector
+@using static BakalarPrace.Extensions.LegacyCookieExtension
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +38,50 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+        <div class="col-sm-1">
+            <!-- Notifications block -->
+            @{
+                if (HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"] != null)
+                {
+                    var cookie =
+                        HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"].FromLegacyCookieString();
+                    <div aria-live="polite" aria-atomic="true">
+                        <div class="js_systemNotification @cookie["Class"]" style="position: absolute; top: 0; right: 0;"
+                             data-autohide="false">
+                            <div class="toast-header">
+                                @{
+                                    if (cookie["Title"] == "")
+                                    {
+                                        <strong class="mr-auto">Oznámení systému</strong>
+                                    }
+                                    else
+                                    {
+                                        <strong class="mr-auto">@cookie["Title"]</strong>
+                                    }
+
+                                }
+                                <small></small>
+                                <button type="button" class="ml-2 mb-1 close js_destroyNotification" data-dismiss="toast"
+                                        aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="toast-body">
+                                @cookie["Text"]
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div style="display: none">
+                    @{
+                        HttpContextAccessor.HttpContext.Response.Cookies.Delete("SystemResponse.Cookie");
+                    }
+                </div>
+            }
+            <!-- End of notification block -->
+        </div>
     </div>
+    
 
     <footer class="border-top footer text-muted">
         <div class="container">
@@ -45,6 +91,18 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $('.js_systemNotification').toast('show');
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('.js_destroyNotification').on('click', function () {
+                $('.js_systemNotification').toast("dispose");
+                $('.js_systemNotification').remove();
+            });
+        });
+
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,30 @@
+﻿
+<div class="mx-auto">
+    <h1 class="text-center"> Vyhledávání dle parametrů </h1>
+</div>
+<form method="post">
+    @{ 
+        foreach(string property in ViewBag.ClassProperties)
+        {
+            string item;
+            <div class="mb-3">
+                <label value="@property"> @property </label>
+                @{ 
+                    if (property.Contains("_Advanced") || property.Contains("_advanced"))
+                    {
+                        string[] prop = property.Split("_Advanced");
+                        item = prop[0] + "+/-";
+                    }
+                    else
+                    {
+                        item = property;
+                    }
+                }
+                <input type="text" name="@item" />
+            </div>
+        }
+    }
+</form>
+
+
+
