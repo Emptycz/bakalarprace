@@ -1,4 +1,4 @@
-﻿@using static BakalarPrace.Extensions.NavSelector 
+﻿@using static BakalarPrace.Extensions.NavSelector
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,38 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BakalarPrace</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <style>
-        table td, table th {
-            width: 150px;
-        }
-
-            table th:first-of-type, table td:first-of-type {
-                position: sticky;
-                left: 0px;
-                background-color: white;
-                color: black;
-            }
-
-        .table-custom {
-            width: 100%;
-            overflow-x: scroll;
-            table-layout: fixed;
-        }
-
-        .box {
-            width: 100%;
-            display: block;
-            position: relative;
-            overflow-x: scroll;
-        }
-
-        .marked {
-            background-color: lightslategrey;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/dataTables/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/csvTable.css" />
 </head>
 <body>
     <header>
