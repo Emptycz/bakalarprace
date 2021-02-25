@@ -152,7 +152,7 @@ namespace BakalarPrace.Controllers
 
         private bool _verifyUploadFolderExistence()
         {
-            string path = "wwwroot/uploads/";
+            string path = "wwwroot/uploads";
             if(Directory.Exists(path) == true)
             {
                 return true;
