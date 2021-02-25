@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using System;
 
 namespace BakalarPrace
 {
@@ -47,7 +47,8 @@ namespace BakalarPrace
                 //config.Cookie.HttpOnly = false;
                 //config.Cookie.SameSite = "";
                 config.Cookie.Name = "Identity.Cookie";
-                config.LoginPath = "/Account/Login";   
+                config.LoginPath = "/Account/Login";
+                config.ExpireTimeSpan = TimeSpan.FromMinutes(30);
             });
 
             services.AddScoped<Alerter>();

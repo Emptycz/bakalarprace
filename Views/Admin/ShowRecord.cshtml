@@ -1,4 +1,28 @@
 ﻿@model BakalarPrace.Models.Record
+<h1 class="text-center"> Detailní výpis záznamu </h1>
+<div class="row justify-content-center">
+    <div class="col-auto mx-auto">
+        <table class="text-center table table-responsive">
+            <tr>
+                <td>Název souboru:</td>
+                <td> @Model.Name</td>
+            </tr>
+            <tr>
+                <td>Autor: </td>
+                <td> @Model.Author.Firstname @Model.Author.Lastname </td>
+            </tr>
+            <tr>
+                <td>V lokaci: </td>
+                <td>@Model.Location</td>
+            </tr>
+            <tr>
+                <td>Nahráno:</td>
+                <td>@Model.Uploaded</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
 <a asp-action="Imports" asp-controller="Admin" class="btn bg-info"> Zpět na souhrn </a>
 <br />
 <br />
