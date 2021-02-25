@@ -42,7 +42,11 @@ namespace BakalarPrace.Controllers
         public IActionResult Upload(IFormFile file, string Delimeter, string Location, string Name)
         {
             if(file == null || Delimeter == null || Location == null || Name == null){
-
+                return View();
+            }
+            else
+            {
+                this._verifyUploadFolderExistence();
             }
             Console.WriteLine("Načtení controlleru a souboru: "+file.FileName);
             Uploader uploader = new Uploader();
@@ -144,6 +148,20 @@ namespace BakalarPrace.Controllers
                 }
             }
             return View(uploader);
+        }
+
+        private bool _verifyUploadFolderExistence()
+        {
+            string path = "wwwroot/uploads/";
+            if(Directory.Exists(path) == true)
+            {
+                return true;
+            }
+            else
+            {
+                Directory.CreateDirectory(path);
+                return true;
+            }
         }
 
         private bool _processCSV(string filename, string name, string location, string delimeter)
