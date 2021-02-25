@@ -1,9 +1,31 @@
-﻿<div class="mx-auto">
-    <h1 class="text-center"> Admin UI </h1>
+﻿@model BakalarPrace.Models.User; 
+<div class="mx-auto">
+    <h1 class="text-center"> Administrace </h1>
 </div>
 <div class="row">
-    <div class="col">
-        <p class="text-center"> Nejnovejší importy </p>
+    <div class="col border profile-box">
+        <div class="row d-flex justify-content-center">
+            <div>
+                <div class="col text-center">
+                    <img class="profile-image" src="~/images/usericon.png" alt="Profilový obrázek uživatele" />
+                </div>
+                <div class="col margin-top-10">
+                    <table class="profile-table">
+                        <tr>
+                            <td class="profile-table-name"> Uživatel: </td>
+                            <td> @Model.Firstname @Model.Lastname</td>
+                        </tr>
+                        <tr>
+                            <td class="profile-table-name"> Email: </td>
+                            <td> @Model.Email </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>           
+        </div>
+    </div>
+    <div class="col offset-1">
+        <p class="text-center"> Vaše nejnovejší importy </p>
         <table class="table">
             <thead>
                 <tr>
@@ -25,18 +47,6 @@
                 }
             </tbody>
         </table>
-        <p class="text-right btn bg-success"> <a asp-action="Imports" asp-controller="Admin" style="color:white"> Zobrazit více  </a> </p>
-    </div>
-    <div class="col">   
-        <p class="text-center"> Nějaká další tabulka </p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th> xx </th>
-                    <th> xx </th>
-                    <th> xx </th>
-                </tr>
-            </thead>
-        </table>
+        <p class="text-right btn bg-success float-right"> <a asp-action="Imports" asp-controller="Admin" style="color:white"> Zobrazit více  </a> </p>
     </div>
 </div>

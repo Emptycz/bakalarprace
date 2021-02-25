@@ -15,6 +15,7 @@ using BakalarPrace.Data;
 using System.Reflection;
 using BakalarPrace.Services;
 using BakalarPrace.ExceptionModel;
+using Microsoft.AspNetCore.Identity;
 
 namespace BakalarPrace.Controllers
 {
@@ -22,36 +23,28 @@ namespace BakalarPrace.Controllers
    [ViewLayout("_AdminLayout")]
     public class AdminController : Controller
     {
+        private readonly SignInManager<IdentityUser> _signInManager;
+        public AdminController(SignInManager<IdentityUser> signInManager)
+        {
+            _signInManager = signInManager;
+        }
+
         public IActionResult Index()
         {
             Database db = new Database();
-            ViewBag.Records = db.GetFourLatestRecords();
-            return View();
+            var email = _signInManager.Context.User.Identity.Name;
+            User usr = db.GetUserByEmail(email);
+            ViewBag.Records = db.GetFourLatestRecords(usr.ID);
+            return View(usr);
         }
 
         public IActionResult Imports()
         {
             Database db = new Database();
-            List<Record> rc = db.GetRecords();
+            var email = _signInManager.Context.User.Identity.Name;
+            User usr = db.GetUserByEmail(email);
+            List<Record> rc = db.GetRecords(usr.ID);
             ViewBag.Records = rc;
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Imports(string h)
-        {
-            var reader = new StreamReader("wwwroot/uploads/3d25a565-602a-4478-8b64-c587249595c1.csv");
-            var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-
-            csv.Configuration.Delimiter = ";";
-            csv.Configuration.HasHeaderRecord = true;
-            csv.Configuration.HeaderValidated = null;
-            csv.Configuration.MissingFieldFound = null;
-
-            var records = csv.GetRecords<CsvRow>();
-            ViewBag.Records = records.ToList();
-            Database db = new Database();
-            db.AddReport(0, "Test", ViewBag.Records);
             return View();
         }
 
@@ -99,7 +92,30 @@ namespace BakalarPrace.Controllers
         {
             Database db = new Database();
             Record rc = db.GetDetailedRecord(RecordId);
-            return View(rc);
+            if(rc.ID == 0)
+            {
+                new Alerter("Zobrazení záznamu", "Nepodařilo se dohledat žádaný záznam", "ERROR", HttpContext);
+                return RedirectToAction("Imports");
+            }
+            var email = _signInManager.Context.User.Identity.Name;
+            User usr = db.GetUserByEmail(email);
+            try
+            {
+                if (rc.Author.ID != usr.ID)
+                {
+                    new Alerter("Zobrazení záznamu", "Nemáte dostatečné oprávnění k zobrazení toho záznamu", "ERROR", HttpContext);
+                    return RedirectToAction("Imports");
+                }
+                else
+                {
+                    return View(rc);
+                }
+            }catch(Exception)
+            {
+                new Alerter("Zobrazení záznamu", "Došlo k chybě při pokusu o ověření oprávnění", "ERROR", HttpContext);
+                return RedirectToAction("Imports");
+            }
+            
         }
 
     }

@@ -38,71 +38,89 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-        <div class="col-sm-1">
-            <!-- Notifications block -->
-            @{
-                if (HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"] != null)
-                {
-                    var cookie =
-                        HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"].FromLegacyCookieString();
-                    <div aria-live="polite" aria-atomic="true">
-                        <div class="js_systemNotification @cookie["Class"]" style="position: absolute; top: 0; right: 0;"
-                             data-autohide="false">
-                            <div class="toast-header">
-                                @{
-                                    if (cookie["Title"] == "")
-                                    {
-                                        <strong class="mr-auto">Oznámení systému</strong>
-                                    }
-                                    else
-                                    {
-                                        <strong class="mr-auto">@cookie["Title"]</strong>
-                                    }
 
-                                }
-                                <small></small>
-                                <button type="button" class="ml-2 mb-1 close js_destroyNotification" data-dismiss="toast"
-                                        aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="toast-body">
-                                @cookie["Text"]
-                            </div>
+        @{
+            if (HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"] != null)
+            {
+                var cookie = HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"].FromLegacyCookieString();
+
+                <div aria-live="polite" aria-atomic="true" style="position: absolute; right: 100px;">
+                    <div id="toast" class="toast hide" role="alert" aria-live="assertive" data-autohide="false" aria-atomic="true">
+                        <div class="toast-header">
+                            <strong class="me-auto">@cookie["Title"]</strong>
+                            <button type="button" class="btn-close js_removeAlert" data-bs-dismiss="toast" aria-label="Close"> <i class="material-icons" style="font-size: 15px"> close </i></button>
+                        </div>
+                        <div class="toast-body">
+                            @cookie["Text"];
                         </div>
                     </div>
-                }
-                <div style="display: none">
+                </div>
+            }
+        }
+
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2020 - BakalarPrace - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+       @{ 
+            if (HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"] != null)
+            {
+               <script>
+                   $(document).ready(function () {
+                       $('#toast').toast('show');
+                   });
+               </script>
+            }
+        }
+       
+    <script>
+            $(document).ready(function () {
+
+                //Inicializace Tooltip
+                $(function () {
+                    $('[data-toggle="tooltip"]').tooltip()
+                });
+
+                //Inicializace Modal
+                $('#myModal').on('shown.bs.modal', function () {
+                    $('#myInput').trigger('focus')
+                });
+
+                //Při otevření modal okna u odstranění recordu, doplň dynamicky ID do Modal okna
+                $('.js_openModal').on('click', function () {
+                    var id = $(this).attr('data-id');
+                    $('.js_removeRecordButton').attr('href', '/Admin/RemoveRecord?RecordId=' + id);
+                });
+
+                //Odstraň cookie
+                $('.js_removeAlert').on('click', function () {
+                    //$.cookie("SystemResponse.Cookie", null, { path: '/' });
                     @{
                         HttpContextAccessor.HttpContext.Response.Cookies.Delete("SystemResponse.Cookie");
                     }
-                </div>
-            }
-            <!-- End of notification block -->
-        </div>
-    </div>
-    
+                    $('#toast').toast('dispose');
+                });
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - BakalarPrace - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
-        $(document).ready(function () {
-            $('.js_systemNotification').toast('show');
-            $('[data-toggle="tooltip"]').tooltip();
+                //Zablokuj tlačítko ve formulářu kvůli dlouhé době zpracování po odeslání
+                $('.js_addImport').submit(function (e) {
+                    var loc = $('.js_validationImportLoc').val()
+                    var name = $('.js_validationImportName').val()
+                    var file = $('.js_validationImportFile').val()
 
-            $('.js_destroyNotification').on('click', function () {
-                $('.js_systemNotification').toast("dispose");
-                $('.js_systemNotification').remove();
+                    if (loc != "" && name != "" && file != "") {
+                        $('.js_submitImport').attr("disabled", true);
+                    }
+                });
+
             });
-        });
 
     </script>
-    @RenderSection("Scripts", required: false)
+        @RenderSection("Scripts", required: false)
+    </div>
 </body>
 </html>

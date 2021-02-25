@@ -72,3 +72,31 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.wrapper {
+    max-width: 100vw;
+    overflow: auto;
+}
+
+.profile-image {
+    width: 150px;
+}
+
+.profile-table-name{
+    width: 100px;
+}
+
+.profile-box {
+    padding: 20px;
+}
+
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.js_removeAlert {
+    position: relative;
+    left: 60px;
+    border-width: 0.5px;
+}

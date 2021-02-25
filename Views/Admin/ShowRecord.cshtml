@@ -2,267 +2,267 @@
 <a asp-action="Imports" asp-controller="Admin" class="btn bg-info"> Zpět na souhrn </a>
 <br />
 <br />
-
 <div class="box">
-    <table id="js_dataTable" class="table table-hover table-custom dataTable">
-        <thead class="thead-dark">
-            <tr>
-                <th> Číslo řádku </th>
-                <th> Datum </th>
-                <th> Cas </th>
-                <th> Vysledek </th>
-                <th> Mod </th>
-                <th> Nejlepsi_shoda </th>
-                <th> Nejlepsi_shoda_MN </th>
-                <th> Uplynuly_cas_1 </th>
-                <th> Uplynuly_cas_2 </th>
-                <th> Cas_celkem </th>
-                <th> Pole1 </th>
-                <th> Pole1_Hodnota </th>
-                <th> Pole2 </th>
-                <th> Pole2_Hodnota </th>
-                <th> Pole3 </th>
-                <th> Pole3_Hodnota </th>
-                <th> Pole4 </th>
-                <th> Pole4_Hodnota </th>
-                <th> Pole5 </th>
-                <th> Pole5_Hodnota </th>
-                <th> Pole6 </th>
-                <th> Pole6_Hodnota </th>
-                <th> Pole7 </th>
-                <th> Pole7_Hodnota </th>
-                <th> Pole8 </th>
-                <th> Pole8_Hodnota </th>
-                <th> LOD </th>
-                <th> Mg </th>
-                <th> Mg +/- </th>
-                <th> Al </th>
-                <th> Al +/- </th>
-                <th> Si </th>
-                <th> Si +/- </th>
-                <th> P </th>
-                <th> P +/- </th>
-                <th> S </th>
-                <th> S +/- </th>
-                <th> Cl </th>
-                <th> Cl +/- </th>
-                <th> K </th>
-                <th> K +/- </th>
-                <th> Ca </th>
-                <th> Ca +/- </th>
-                <th> Ti </th>
-                <th> Ti +/- </th>
-                <th> Cr </th>
-                <th> Cr +/- </th>
-                <th> Mn </th>
-                <th> Mn +/- </th>
-                <th> Fe </th>
-                <th> Fe +/- </th>
-                <th> Co </th>
-                <th> Co +/- </th>
-                <th> Ni </th>
-                <th> Ni +/- </th>
-                <th> Cu </th>
-                <th> Cu +/- </th>
-                <th> Zn </th>
-                <th> Zn +/- </th>
-                <th> As </th>
-                <th> As +/- </th>
-                <th> Se </th>
-                <th> Se +/- </th>
-                <th> Rb </th>
-                <th> Rb +/- </th>
-                <th> Sr </th>
-                <th> Sr +/- </th>
-                <th> Y </th>
-                <th> Y +/- </th>
-                <th> Zr </th>
-                <th> Zr +/- </th>
-                <th> Mo </th>
-                <th> Mo +/- </th>
-                <th> Ag </th>
-                <th> Ag +/- </th>
-                <th> Cd </th>
-                <th> Cd +/- </th>
-                <th> In </th>
-                <th> In +/- </th>
-                <th> Sn </th>
-                <th> Sn +/- </th>
-                <th> Sb </th>
-                <th> Sb +/- </th>
-                <th> Ba </th>
-                <th> Ba +/- </th>
-                <th> W </th>
-                <th> W +/- </th>
-                <th> Au </th>
-                <th> Au +/- </th>
-                <th> Hg </th>
-                <th> Hg +/- </th>
-                <th> Tl </th>
-                <th> Tl +/- </th>
-                <th> Pb </th>
-                <th> Pb +/- </th>
-                <th> Bi </th>
-                <th> Bi +/- </th>
-                <th> Th </th>
-                <th> Th +/- </th>
-                <th> U </th>
-                <th> U +/- </th>
-                <th> LE </th>
-                <th> LE +/- </th>
-                <th> Nejlepsi_shoda2 </th>
-                <th> Nejlepsi_shoda2_MN </th>
-                <th> Nejlepsi_shoda3 </th>
-                <th> Nejlepsi_shoda3_MN </th>
-                <th> Pole9 </th>
-                <th> Pole9_Hodnota </th>
-                <th> Pole10 </th>
-                <th> Pole10_Hodnota </th>
-                <th> Pole11 </th>
-                <th> Pole11_Hodnota </th>
-                <th> Pole12 </th>
-                <th> Pole12_Hodnota </th>
-                <th> Pole13 </th>
-                <th> Pole13_Hodnota </th>
-                <th> Pole14 </th>
-                <th> Pole14_Hodnota </th>
-                <th> Pole15 </th>
-                <th> Pole15_Hodnota </th>
-                <th> Pole16 </th>
-                <th> Pole16_Hodnota </th>
-            </tr>
-        </thead>
-        <tbody>
-            @{ foreach (CsvRow row in Model.CSV)
-                {
-    <tr class="js_markTableRow">
-        <td> @row.RowNumber </td>
-        <td> @row.Datum </td>
-        <td> @row.Cas </td>
-        <td> @row.Vysledek </td>
-        <td> @row.Mod </td>
-        <td> @row.Nejlepsi_shoda </td>
-        <td> @row.Nejlepsi_shoda_MN </td>
-        <td> @row.Uplynuly_cas_1 </td>
-        <td> @row.Uplynuly_cas_2 </td>
-        <td> @row.Cas_celkem </td>
-        <td> @row.Pole1 </td>
-        <td> @row.Pole1_Hodnota </td>
-        <td> @row.Pole2 </td>
-        <td> @row.Pole2_Hodnota </td>
-        <td> @row.Pole3 </td>
-        <td> @row.Pole3_Hodnota </td>
-        <td> @row.Pole4 </td>
-        <td> @row.Pole4_Hodnota </td>
-        <td> @row.Pole5 </td>
-        <td> @row.Pole5_Hodnota </td>
-        <td> @row.Pole6 </td>
-        <td> @row.Pole6_Hodnota </td>
-        <td> @row.Pole7 </td>
-        <td> @row.Pole7_Hodnota </td>
-        <td> @row.Pole8 </td>
-        <td> @row.Pole8_Hodnota </td>
-        <td> @row.LOD </td>
-        <td> @row.Mg </td>
-        <td> @row.Mg_Advanced </td>
-        <td> @row.Al </td>
-        <td> @row.Al_Advanced </td>
-        <td> @row.Si </td>
-        <td> @row.Si_Advanced </td>
-        <td> @row.P </td>
-        <td> @row.P_Advanced </td>
-        <td> @row.S </td>
-        <td> @row.S_Advanced </td>
-        <td> @row.Cl </td>
-        <td> @row.Cl_Advanced </td>
-        <td> @row.K </td>
-        <td> @row.K_Advanced </td>
-        <td> @row.Ca </td>
-        <td> @row.Ca_Advanced </td>
-        <td> @row.Ti </td>
-        <td> @row.Ti_Advanced </td>
-        <td> @row.Cr </td>
-        <td> @row.Cr_Advanced </td>
-        <td> @row.Mn </td>
-        <td> @row.Mn_Advanced </td>
-        <td> @row.Fe </td>
-        <td> @row.Fe_Advanced </td>
-        <td> @row.Co </td>
-        <td> @row.Co_Advanced </td>
-        <td> @row.Ni </td>
-        <td> @row.Ni_Advanced </td>
-        <td> @row.Cu </td>
-        <td> @row.Cu_Advanced </td>
-        <td> @row.Zn </td>
-        <td> @row.Zn_Advanced </td>
-        <td> @row.As </td>
-        <td> @row.As_Advanced </td>
-        <td> @row.Se </td>
-        <td> @row.Se_Advanced </td>
-        <td> @row.Rb </td>
-        <td> @row.Rb_Advanced </td>
-        <td> @row.Sr </td>
-        <td> @row.Sr_Advanced </td>
-        <td> @row.Y </td>
-        <td> @row.Y_Advanced </td>
-        <td> @row.Zr </td>
-        <td> @row.Zr_Advanced </td>
-        <td> @row.Mo </td>
-        <td> @row.Mo_Advanced </td>
-        <td> @row.Ag </td>
-        <td> @row.Ag_Advanced </td>
-        <td> @row.Cd </td>
-        <td> @row.Cd_Advanced </td>
-        <td> @row.In </td>
-        <td> @row.In_Advanced </td>
-        <td> @row.Sn </td>
-        <td> @row.Sn_Advanced </td>
-        <td> @row.Sb </td>
-        <td> @row.Sb_Advanced </td>
-        <td> @row.Ba </td>
-        <td> @row.Ba_Advanced </td>
-        <td> @row.W </td>
-        <td> @row.W_Advanced </td>
-        <td> @row.Au </td>
-        <td> @row.Au_Advanced </td>
-        <td> @row.Hg </td>
-        <td> @row.Hg_Advanced </td>
-        <td> @row.Tl </td>
-        <td> @row.Tl_Advanced </td>
-        <td> @row.Pb </td>
-        <td> @row.Pb_Advanced </td>
-        <td> @row.Bi </td>
-        <td> @row.Bi_Advanced </td>
-        <td> @row.Th </td>
-        <td> @row.Th_Advanced </td>
-        <td> @row.U </td>
-        <td> @row.U_Advanced </td>
-        <td> @row.LE </td>
-        <td> @row.LE_Advanced </td>
-        <td> @row.Nejlepsi_shoda2 </td>
-        <td> @row.Nejlepsi_shoda2_MN </td>
-        <td> @row.Nejlepsi_shoda3 </td>
-        <td> @row.Nejlepsi_shoda3_MN </td>
-        <td> @row.Pole9 </td>
-        <td> @row.Pole9_Hodnota </td>
-        <td> @row.Pole10 </td>
-        <td> @row.Pole10_Hodnota </td>
-        <td> @row.Pole11 </td>
-        <td> @row.Pole11_Hodnota </td>
-        <td> @row.Pole12 </td>
-        <td> @row.Pole12_Hodnota </td>
-        <td> @row.Pole13 </td>
-        <td> @row.Pole13_Hodnota </td>
-        <td> @row.Pole14 </td>
-        <td> @row.Pole14_Hodnota </td>
-        <td> @row.Pole15 </td>
-        <td> @row.Pole15_Hodnota </td>
-        <td> @row.Pole16 </td>
-        <td> @row.Pole16_Hodnota </td>
-    </tr>
- } }
-        </tbody>
-    </table>
+    <div class="wrapper">
+        <table id="js_dataTable" class="table table-hover table-custom dataTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th> Číslo řádku </th>
+                    <th> Datum </th>
+                    <th> Cas </th>
+                    <th> Vysledek </th>
+                    <th> Mod </th>
+                    <th> Nejlepsi_shoda </th>
+                    <th> Nejlepsi_shoda_MN </th>
+                    <th> Uplynuly_cas_1 </th>
+                    <th> Uplynuly_cas_2 </th>
+                    <th> Cas_celkem </th>
+                    <th> Pole1 </th>
+                    <th> Pole1_Hodnota </th>
+                    <th> Pole2 </th>
+                    <th> Pole2_Hodnota </th>
+                    <th> Pole3 </th>
+                    <th> Pole3_Hodnota </th>
+                    <th> Pole4 </th>
+                    <th> Pole4_Hodnota </th>
+                    <th> Pole5 </th>
+                    <th> Pole5_Hodnota </th>
+                    <th> Pole6 </th>
+                    <th> Pole6_Hodnota </th>
+                    <th> Pole7 </th>
+                    <th> Pole7_Hodnota </th>
+                    <th> Pole8 </th>
+                    <th> Pole8_Hodnota </th>
+                    <th> LOD </th>
+                    <th> Mg </th>
+                    <th> Mg +/- </th>
+                    <th> Al </th>
+                    <th> Al +/- </th>
+                    <th> Si </th>
+                    <th> Si +/- </th>
+                    <th> P </th>
+                    <th> P +/- </th>
+                    <th> S </th>
+                    <th> S +/- </th>
+                    <th> Cl </th>
+                    <th> Cl +/- </th>
+                    <th> K </th>
+                    <th> K +/- </th>
+                    <th> Ca </th>
+                    <th> Ca +/- </th>
+                    <th> Ti </th>
+                    <th> Ti +/- </th>
+                    <th> Cr </th>
+                    <th> Cr +/- </th>
+                    <th> Mn </th>
+                    <th> Mn +/- </th>
+                    <th> Fe </th>
+                    <th> Fe +/- </th>
+                    <th> Co </th>
+                    <th> Co +/- </th>
+                    <th> Ni </th>
+                    <th> Ni +/- </th>
+                    <th> Cu </th>
+                    <th> Cu +/- </th>
+                    <th> Zn </th>
+                    <th> Zn +/- </th>
+                    <th> As </th>
+                    <th> As +/- </th>
+                    <th> Se </th>
+                    <th> Se +/- </th>
+                    <th> Rb </th>
+                    <th> Rb +/- </th>
+                    <th> Sr </th>
+                    <th> Sr +/- </th>
+                    <th> Y </th>
+                    <th> Y +/- </th>
+                    <th> Zr </th>
+                    <th> Zr +/- </th>
+                    <th> Mo </th>
+                    <th> Mo +/- </th>
+                    <th> Ag </th>
+                    <th> Ag +/- </th>
+                    <th> Cd </th>
+                    <th> Cd +/- </th>
+                    <th> In </th>
+                    <th> In +/- </th>
+                    <th> Sn </th>
+                    <th> Sn +/- </th>
+                    <th> Sb </th>
+                    <th> Sb +/- </th>
+                    <th> Ba </th>
+                    <th> Ba +/- </th>
+                    <th> W </th>
+                    <th> W +/- </th>
+                    <th> Au </th>
+                    <th> Au +/- </th>
+                    <th> Hg </th>
+                    <th> Hg +/- </th>
+                    <th> Tl </th>
+                    <th> Tl +/- </th>
+                    <th> Pb </th>
+                    <th> Pb +/- </th>
+                    <th> Bi </th>
+                    <th> Bi +/- </th>
+                    <th> Th </th>
+                    <th> Th +/- </th>
+                    <th> U </th>
+                    <th> U +/- </th>
+                    <th> LE </th>
+                    <th> LE +/- </th>
+                    <th> Nejlepsi_shoda2 </th>
+                    <th> Nejlepsi_shoda2_MN </th>
+                    <th> Nejlepsi_shoda3 </th>
+                    <th> Nejlepsi_shoda3_MN </th>
+                    <th> Pole9 </th>
+                    <th> Pole9_Hodnota </th>
+                    <th> Pole10 </th>
+                    <th> Pole10_Hodnota </th>
+                    <th> Pole11 </th>
+                    <th> Pole11_Hodnota </th>
+                    <th> Pole12 </th>
+                    <th> Pole12_Hodnota </th>
+                    <th> Pole13 </th>
+                    <th> Pole13_Hodnota </th>
+                    <th> Pole14 </th>
+                    <th> Pole14_Hodnota </th>
+                    <th> Pole15 </th>
+                    <th> Pole15_Hodnota </th>
+                    <th> Pole16 </th>
+                    <th> Pole16_Hodnota </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ foreach (CsvRow row in Model.CSV)
+                    {
+        <tr class="js_markTableRow">
+            <td> @row.RowNumber </td>
+            <td> @row.Datum </td>
+            <td> @row.Cas </td>
+            <td> @row.Vysledek </td>
+            <td> @row.Mod </td>
+            <td> @row.Nejlepsi_shoda </td>
+            <td> @row.Nejlepsi_shoda_MN </td>
+            <td> @row.Uplynuly_cas_1 </td>
+            <td> @row.Uplynuly_cas_2 </td>
+            <td> @row.Cas_celkem </td>
+            <td> @row.Pole1 </td>
+            <td> @row.Pole1_Hodnota </td>
+            <td> @row.Pole2 </td>
+            <td> @row.Pole2_Hodnota </td>
+            <td> @row.Pole3 </td>
+            <td> @row.Pole3_Hodnota </td>
+            <td> @row.Pole4 </td>
+            <td> @row.Pole4_Hodnota </td>
+            <td> @row.Pole5 </td>
+            <td> @row.Pole5_Hodnota </td>
+            <td> @row.Pole6 </td>
+            <td> @row.Pole6_Hodnota </td>
+            <td> @row.Pole7 </td>
+            <td> @row.Pole7_Hodnota </td>
+            <td> @row.Pole8 </td>
+            <td> @row.Pole8_Hodnota </td>
+            <td> @row.LOD </td>
+            <td> @row.Mg </td>
+            <td> @row.Mg_Advanced </td>
+            <td> @row.Al </td>
+            <td> @row.Al_Advanced </td>
+            <td> @row.Si </td>
+            <td> @row.Si_Advanced </td>
+            <td> @row.P </td>
+            <td> @row.P_Advanced </td>
+            <td> @row.S </td>
+            <td> @row.S_Advanced </td>
+            <td> @row.Cl </td>
+            <td> @row.Cl_Advanced </td>
+            <td> @row.K </td>
+            <td> @row.K_Advanced </td>
+            <td> @row.Ca </td>
+            <td> @row.Ca_Advanced </td>
+            <td> @row.Ti </td>
+            <td> @row.Ti_Advanced </td>
+            <td> @row.Cr </td>
+            <td> @row.Cr_Advanced </td>
+            <td> @row.Mn </td>
+            <td> @row.Mn_Advanced </td>
+            <td> @row.Fe </td>
+            <td> @row.Fe_Advanced </td>
+            <td> @row.Co </td>
+            <td> @row.Co_Advanced </td>
+            <td> @row.Ni </td>
+            <td> @row.Ni_Advanced </td>
+            <td> @row.Cu </td>
+            <td> @row.Cu_Advanced </td>
+            <td> @row.Zn </td>
+            <td> @row.Zn_Advanced </td>
+            <td> @row.As </td>
+            <td> @row.As_Advanced </td>
+            <td> @row.Se </td>
+            <td> @row.Se_Advanced </td>
+            <td> @row.Rb </td>
+            <td> @row.Rb_Advanced </td>
+            <td> @row.Sr </td>
+            <td> @row.Sr_Advanced </td>
+            <td> @row.Y </td>
+            <td> @row.Y_Advanced </td>
+            <td> @row.Zr </td>
+            <td> @row.Zr_Advanced </td>
+            <td> @row.Mo </td>
+            <td> @row.Mo_Advanced </td>
+            <td> @row.Ag </td>
+            <td> @row.Ag_Advanced </td>
+            <td> @row.Cd </td>
+            <td> @row.Cd_Advanced </td>
+            <td> @row.In </td>
+            <td> @row.In_Advanced </td>
+            <td> @row.Sn </td>
+            <td> @row.Sn_Advanced </td>
+            <td> @row.Sb </td>
+            <td> @row.Sb_Advanced </td>
+            <td> @row.Ba </td>
+            <td> @row.Ba_Advanced </td>
+            <td> @row.W </td>
+            <td> @row.W_Advanced </td>
+            <td> @row.Au </td>
+            <td> @row.Au_Advanced </td>
+            <td> @row.Hg </td>
+            <td> @row.Hg_Advanced </td>
+            <td> @row.Tl </td>
+            <td> @row.Tl_Advanced </td>
+            <td> @row.Pb </td>
+            <td> @row.Pb_Advanced </td>
+            <td> @row.Bi </td>
+            <td> @row.Bi_Advanced </td>
+            <td> @row.Th </td>
+            <td> @row.Th_Advanced </td>
+            <td> @row.U </td>
+            <td> @row.U_Advanced </td>
+            <td> @row.LE </td>
+            <td> @row.LE_Advanced </td>
+            <td> @row.Nejlepsi_shoda2 </td>
+            <td> @row.Nejlepsi_shoda2_MN </td>
+            <td> @row.Nejlepsi_shoda3 </td>
+            <td> @row.Nejlepsi_shoda3_MN </td>
+            <td> @row.Pole9 </td>
+            <td> @row.Pole9_Hodnota </td>
+            <td> @row.Pole10 </td>
+            <td> @row.Pole10_Hodnota </td>
+            <td> @row.Pole11 </td>
+            <td> @row.Pole11_Hodnota </td>
+            <td> @row.Pole12 </td>
+            <td> @row.Pole12_Hodnota </td>
+            <td> @row.Pole13 </td>
+            <td> @row.Pole13_Hodnota </td>
+            <td> @row.Pole14 </td>
+            <td> @row.Pole14_Hodnota </td>
+            <td> @row.Pole15 </td>
+            <td> @row.Pole15_Hodnota </td>
+            <td> @row.Pole16 </td>
+            <td> @row.Pole16_Hodnota </td>
+        </tr> } }
+            </tbody>
+        </table>
+    </div>  
 </div>
 @section Scripts{
     <script type="text/javascript" charset="utf8" src="~/lib/dataTables/datatables.min.js"></script>

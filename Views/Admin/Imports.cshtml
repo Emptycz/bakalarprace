@@ -8,6 +8,7 @@
     <thead>
         <tr>
             <th> ID Záznamu </th>
+            <th> Název záznamu </th>
             <th> Autor záznamu </th>
             <th> Datum nahrání </th>
             <th> Lokace </th>
@@ -20,17 +21,38 @@
             {
                 <tr>
                     <td> @rc.ID </td>
+                    <td> @rc.Name </td>
                     <td> @rc.Author.Firstname @rc.Author.Lastname</td>
                     <td> @rc.Uploaded </td>
                     <td> @rc.Location </td>
                     <td>
-                        <a class="btn" href="/Admin/ShowRecord?RecordId=@rc.ID"> <i class="material-icons" style="color: green"> zoom_out_map </i> </a>
-                        <a class="btn" href="/Admin/RemoveRecord?RecordId=@rc.ID"> <i class="material-icons" style="color: red"> clear </i> </a>
+                        <a class="btn" href="/Admin/ShowRecord?RecordId=@rc.ID" data-toggle="tooltip" data-placement="top" title="Zobrazit CSV záznam"> <i class="material-icons" style="color: green"> zoom_out_map </i> </a>
+                        <a class="btn js_openModal" href="/Admin/RemoveRecord?RecordId=@rc.ID" data-id="@rc.ID" data-toggle="modal" data-target="#exampleModalCenter"> <i class="material-icons" style="color: red"> clear </i> </a>
                     </td>
                 </tr>
             }
         }
     </tbody>
-</table>    
+</table>  
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Smazat záznam</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center text-danger"> Tuto akci nelze vrátit, opravdu ji chcete provést?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit akci</button>
+                <a class="btn btn-danger js_removeRecordButton" href="#!"> Odstranit záznam </a>
+            </div>
+        </div>
+    </div>
+</div>  
 
 

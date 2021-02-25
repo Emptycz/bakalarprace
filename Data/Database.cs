@@ -24,8 +24,13 @@ namespace BakalarPrace.Data
             this._verifyConnection();
         }
 
-        public List<Record> GetFourLatestRecords()
+        public List<Record> GetFourLatestRecords(int authorId)
         {
+            if(this.VerifyUserExistenceByID(authorId) == false)
+            {
+                throw new Exception("GetFourLatestRecords: Tento uživatel neexistuje");
+            }
+
             using (var db = new AppDb())
             {
                 db.Connection.Open();
@@ -34,7 +39,8 @@ namespace BakalarPrace.Data
                     using (var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location FROM record ORDER BY ID DESC LIMIT 4";
+                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location, Name FROM record WHERE AuthorId = @id ORDER BY ID DESC LIMIT 4";
+                        cmd.Parameters.AddWithValue("@id", authorId);
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
                         {
@@ -43,13 +49,16 @@ namespace BakalarPrace.Data
                             int Aid;
                             DateTime Uploaded;
                             string Loc;
+                            string Name;
                             while (reader.Read())
                             {
                                 try { Id = reader.GetInt32(0); } catch (Exception) { Id = 0; }
                                 try { Aid = reader.GetInt32(1); } catch (Exception) { Aid = 0; }
                                 try { Uploaded = reader.GetDateTime(2); } catch (Exception) { Uploaded = DateTime.Now; }
                                 try { Loc = reader.GetString(3); } catch (Exception) { Loc = null; }
-                                records.Add(new Record(Id, Aid, Uploaded, Loc));
+                                try { Name = reader.GetString(4); } catch (Exception) { Name = null; }
+
+                                records.Add(new Record(Id, Name, Aid, Uploaded, Loc));
                             }
                             return records;
                         }
@@ -208,6 +217,38 @@ namespace BakalarPrace.Data
             }
         }
 
+        public bool VerifyUserExistenceByID(int id)
+        {
+            using (var db = new AppDb())
+            {
+                db.Connection.Open();
+                try
+                {
+                    using (var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "SELECT 1 FROM user WHERE ID = @id";
+                        cmd.Parameters.AddWithValue("@id", id);
+                        var reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Došlo k chybě při ověření existence uživatele v databázi: " + ex.Message);
+                    return false;
+                }
+            }
+        }
+
         public User LoginUser(string email, string password)
         {
             using(var db = new AppDb())
@@ -254,8 +295,12 @@ namespace BakalarPrace.Data
             }
         }
 
-        public List<Record> GetRecords()
+        public List<Record> GetRecords(int authorId)
         {
+            if(this.VerifyUserExistenceByID(authorId) == false)
+            {
+                throw new Exception("Funkce: GetRecords: Tento uživatel neexistuje!");
+            }
             using (var db = new AppDb())
             {
                 db.Connection.Open();
@@ -264,7 +309,8 @@ namespace BakalarPrace.Data
                     using(var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location FROM record ORDER BY ID DESC";
+                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location, Name FROM record WHERE AuthorID = @id ORDER BY ID DESC";
+                        cmd.Parameters.AddWithValue("@id", authorId);
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
                         {
@@ -273,13 +319,16 @@ namespace BakalarPrace.Data
                             int Aid;
                             DateTime Uploaded;
                             string Loc;
+                            string Name;
                             while (reader.Read())
                             {
                                 try { Id = reader.GetInt32(0); } catch (Exception) { Id = 0; }
                                 try { Aid = reader.GetInt32(1); } catch (Exception) { Aid = 0; }
                                 try { Uploaded = reader.GetDateTime(2); } catch (Exception) { Uploaded = DateTime.Now; }
                                 try { Loc = reader.GetString(3); } catch (Exception) { Loc = null; }
-                                records.Add(new Record(Id, Aid, Uploaded, Loc));
+                                try { Name = reader.GetString(4); } catch (Exception) { Name = null; }
+
+                                records.Add(new Record(Id, Name, Aid, Uploaded, Loc));
                             }
                             return records;
                         }
@@ -298,6 +347,11 @@ namespace BakalarPrace.Data
 
         public Record GetDetailedRecord(int recordId)
         {
+            if (this.VerifyRecordExistenceById(recordId) == false)
+            {
+                return new Record();
+            }
+
             using(var db = new AppDb())
             {
                 db.Connection.Open();
@@ -306,7 +360,7 @@ namespace BakalarPrace.Data
                     using(var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location FROM record WHERE ID = @id";
+                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location, Name FROM record WHERE ID = @id";
                         cmd.Parameters.AddWithValue("@id", recordId);
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
@@ -315,15 +369,17 @@ namespace BakalarPrace.Data
                             int Aid = 0;
                             DateTime Uploaded = DateTime.Now;
                             string Loc = null;
+                            string Name = null;
                             while (reader.Read())
                             {
                                 try { Id = reader.GetInt32(0); } catch (Exception) { Id = 0; }
                                 try { Aid = reader.GetInt32(1); } catch (Exception) { Aid = 0; }
                                 try { Uploaded = reader.GetDateTime(2); } catch (Exception) { Uploaded = DateTime.Now; }
                                 try { Loc = reader.GetString(3); } catch (Exception) { Loc = null; }
+                                try { Name = reader.GetString(4); } catch (Exception) { Name = null; }
                             }
                             List<CsvRow> csv = this.GetCSV(Id);
-                            return new Record(Id, Aid, Uploaded, Loc, csv);
+                            return new Record(Id, Name, Aid, Uploaded, Loc, csv);
                             
                         }
                         else
@@ -376,7 +432,7 @@ namespace BakalarPrace.Data
             }
         }
             
-        public LogMessage AddReport(int userId, string location, List<CsvRow> csv)
+        public LogMessage AddReport(int userId, string name, string location, List<CsvRow> csv)
         {
             using(var db = new AppDb())
             {
@@ -386,7 +442,8 @@ namespace BakalarPrace.Data
                     using(var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "INSERT INTO record (AuthorID, Location) VALUES (@aid, @location)";
+                        cmd.CommandText = "INSERT INTO record (Name, AuthorID, Location) VALUES (@name, @aid, @location)";
+                        cmd.Parameters.AddWithValue("@name", name);
                         cmd.Parameters.AddWithValue("@aid", userId);
                         cmd.Parameters.AddWithValue("@location", location);
                         cmd.ExecuteNonQuery();

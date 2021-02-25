@@ -39,8 +39,11 @@ namespace BakalarPrace.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upload(IFormFile file, string Delimeter, string Location)
+        public IActionResult Upload(IFormFile file, string Delimeter, string Location, string Name)
         {
+            if(file == null || Delimeter == null || Location == null || Name == null){
+
+            }
             Console.WriteLine("Načtení controlleru a souboru: "+file.FileName);
             Uploader uploader = new Uploader();
             if(Delimeter == "tabulator")
@@ -104,7 +107,7 @@ namespace BakalarPrace.Controllers
                     bool importDoneCorrectly = false;
                     while (importDoneCorrectly == false)
                     {
-                        if (this._processCSV(FileName, Location, delimeter[iteration]) == true){
+                        if (this._processCSV(FileName, Name, Location, delimeter[iteration]) == true){
                             importDoneCorrectly = true;
                         }
                         else
@@ -143,7 +146,7 @@ namespace BakalarPrace.Controllers
             return View(uploader);
         }
 
-        private bool _processCSV(string filename, string location, string delimeter)
+        private bool _processCSV(string filename, string name, string location, string delimeter)
         {
             Database db = new Database();
 
@@ -164,7 +167,7 @@ namespace BakalarPrace.Controllers
                     var email = _signInManager.Context.User.Identity.Name;
                     User user = db.GetUserByEmail(email);
 
-                    LogMessage lm = db.AddReport(user.ID, location, data);
+                    LogMessage lm = db.AddReport(user.ID, name, location, data);
                     new Alerter(lm, HttpContext);
                 }
                 catch (Exception ex)

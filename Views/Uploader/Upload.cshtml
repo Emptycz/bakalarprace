@@ -15,27 +15,56 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6">
-        <form asp-controller="Uploader" asp-action="Upload" method="post" enctype="multipart/form-data">
+    <div class="col-md-6 mx-auto">
+        <form class="needs-validation js_addImport" novalidate asp-controller="Uploader" asp-action="Upload" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label for="Name"> Název záznamu: </label>
+                <input type="text" name="Name" class="form-control js_validationImportName" required />
+                <div class="valid-feedback">
+                    V pořádku
+                </div>
+                <div class="invalid-feedback">
+                    Pojmenujte si prosím svůj záznam
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Location"> Lokace: </label>
+                <input type="text" name="Location" class="form-control js_validationImportLoc" required />
+                <div class="valid-feedback">
+                    V pořádku
+                </div>
+                <div class="invalid-feedback">
+                    Vyplňte prosím toto pole
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="file"> Vložte CSV soubor: </label>
+                <input type="file" name="File" class="form-control js_validationImportFile" required />
+                <div class="valid-feedback">
+                    V pořádku
+                </div>
+                <div class="invalid-feedback">
+                    Je třeba vložit soubor s koncovkou CSV
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="delimeter"> Vyberte oddělovač: </label>
-                <select name="Delimeter" id="delimeter" style="width: 8vw">
+                <select name="Delimeter" id="delimeter" required class="form-control">
                     <option value="auto" selected> Automatické rozpoznání (doporučeno) </option>
                     <option value="tabulator"> Tabulátor </option>
                     <option value=";"> Středník </option>
                     <option value=','> Čárka </option>
                 </select>
+                <div class="valid-feedback">
+                    V pořádku
+                </div>
+                <div class="invalid-feedback">
+                    Vyplňte prosím toto pole
+                </div>
             </div>
-            <span> Lokace:  </span>
-            <div class="form-group">
-                <input type="text" name="Location"/>
-            </div>
-            <div class="form-group">
-                <input type="file" name="File" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Nahrát záznam" class="btn btn-primary" />
+            <div class="form-group float-right">
+                <input type="submit" value="Nahrát záznam" class="btn btn-primary js_submitImport" />
             </div>
         </form>
     </div>
@@ -44,6 +73,26 @@
 <div>
     <a asp-action="Imports" asp-controller="Admin">Zpět na rozpis záznamů</a>
 </div>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
