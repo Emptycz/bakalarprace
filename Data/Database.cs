@@ -1038,7 +1038,7 @@ namespace BakalarPrace.Data
                     using(var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT 1 FROM Record WHERE ID = @id";
+                        cmd.CommandText = "SELECT 1 FROM record WHERE ID = @id";
                         cmd.Parameters.AddWithValue("@id", id);
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
