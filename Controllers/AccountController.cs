@@ -33,7 +33,7 @@ namespace BakalarPrace.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Login");
         }
 
         public IActionResult Login()
@@ -65,6 +65,7 @@ namespace BakalarPrace.Controllers
         [HttpPost]
         public IActionResult Register(User user, string verifyPassword)
         {
+            
             if(user.Password != verifyPassword)
             {
                 user.Message = "Hesla se neshodují!";
@@ -95,6 +96,12 @@ namespace BakalarPrace.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
+            if(username == null || password == null)
+            {
+                ViewBag.Message = "Nevyplnili jste všechny pole.";
+                return View();
+            }
+
             Database db = new Database();
             string pswd = Hasher.ComputeSha256Hash(password);
             //Získání záznamu uživatele z db

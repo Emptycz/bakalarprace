@@ -1,0 +1,22 @@
+﻿.active {
+    border-bottom: 5px solid #6197f7;
+}
+
+.nav-item {
+    min-width: 80px;
+    text-align: center;
+}
+
+
+.nav-link {
+    padding: .4rem 1rem;
+}
+
+.icon_signOut{
+    margin-right: 10px;
+}
+
+.account-signout-button:hover {
+    border-color: red;
+}
+

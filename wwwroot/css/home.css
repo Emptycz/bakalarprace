@@ -1,0 +1,14 @@
+﻿.active {
+    background-color: #6a6d6f;
+    border-radius: 20px;
+}
+
+.nav-item {
+    min-width: 80px;
+    text-align: center;
+}
+
+
+.nav-link {
+    padding: .4rem 1rem;
+}

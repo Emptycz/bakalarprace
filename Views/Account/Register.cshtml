@@ -1,22 +1,90 @@
 ﻿@model BakalarPrace.Models.User
-@{ 
-    if(Model.Message != null)
-    {
-        <div class="error bg-danger">
-            <p> @Model.Message </p>
-        </div>
-    }
-}
-<form method="post" asp-action="Register" asp-controller="Account">
-    <div class="form-group">
-        <input type="text" placeholder="Vaše křestní jméno" asp-for="@Model.Firstname" required/>
-        <input type="text" placeholder="Vaše příjmení" asp-for="@Model.Lastname" required/>
-        <input type="email" placeholder="Email" asp-for="@Model.Email" required/>
+    <div class="col-10 offset-1 col-md-6 col-lg-4 offset-md-3 offset-lg-4">
+        <h1 class="text-center"> Vytvoření nového účtu </h1>
+        <form class="needs-validation" novalidate method="post" asp-action="Register" asp-controller="Account">
+            @if (Model.Message != null)
+            {
+            <div class="alert alert-danger" role="alert">
+                @Model.Message
+            </div>
+            }
+            <div class="form-group row">
+                <div class="col-12 input-box">
+                    <label for="firstname"> Vaše křestní jméno </label>
+                    <input id="firstname" class="form-control input-field" type="text" placeholder="Vaše křestní jméno" asp-for="@Model.Firstname" required />
+                    <div class="valid-feedback">
+                        V pořádku
+                    </div>
+                    <div class="invalid-feedback">
+                        Toto pole je nutné vyplnit
+                    </div>
+                </div>
+                <div class="col-12 input-box">
+                    <label for="surname"> Vaše příjmení </label>
+                    <input id="surname" class="form-control input-field" type="text" placeholder="Vaše příjmení" asp-for="@Model.Lastname" required />
+                    <div class="valid-feedback">
+                        V pořádku
+                    </div>
+                    <div class="invalid-feedback">
+                        Toto pole je nutné vyplnit
+                    </div>
+                </div>
+                <div class="col-12 input-box">
+                    <label for="email"> Váš email </label>
+                    <input id="email" class="form-control input-field" type="email" placeholder="Email" asp-for="@Model.Email" required />
+                    <div class="valid-feedback">
+                        V pořádku
+                    </div>
+                    <div class="invalid-feedback">
+                        Zadejte prosím validní emailovou adresu
+                    </div>
+                </div>
+            </div>
 
+            <div class="form-group row">
+                <div class="col-12 input-box">
+                    <label for="pswd"> Vaše heslo </label>
+                    <input id="pswd" class="form-control input-field" type="password" placeholder="Heslo" asp-for="@Model.Password" required />
+                    <div class="valid-feedback">
+                        V pořádku
+                    </div>
+                    <div class="invalid-feedback">
+                        Toto pole je nutné vyplnit
+                    </div>
+                </div>
+                <div class="col-12 input-box">
+                    <label for="repswd"> Zopakujte Vaše heslo </label>
+                    <input for="repswd" class="form-control input-field" type="password" placeholder="Znovu heslo" name="verifyPassword" required />
+                    <div class="valid-feedback">
+                        V pořádku
+                    </div>
+                    <div class="invalid-feedback">
+                        Toto pole je nutné vyplnit
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-12">
+                    <button class="btn bg-primary-btn full-width-button" type="submit" value="submit" name="submit"> Registrovat se </button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <input type="password" placeholder="Heslo" asp-for="@Model.Password" required/>
-        <input type="password" placeholder="Znovu heslo" name="verifyPassword" required/>
-    </div>
-    <button type="submit" value="submit" name="submit"> Registrovat se </button>
-</form>
+    <script>// Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();</script>

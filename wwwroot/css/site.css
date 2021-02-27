@@ -1,9 +1,5 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-.active {
-    background-color: lightgray;
-}
-
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -25,6 +21,7 @@ a {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+  border-radius: 30px;
 }
 
 /* Sticky footer styles
@@ -103,5 +100,41 @@ body {
 
 .marked {
     background-color: lightslategrey;
+    color: white;
+}
+
+.dataTable thead tr th, .dataTable tbody tr td{
+    min-width: 100px;
+}
+
+.full-width-button {
+    width: 100%;
+    border-radius: 20px;
+    min-height: 45px; 
+}
+
+.input-box{
+    margin-top: 10px;
+}
+
+.js_progress {
+    width: 100%;
+    border-radius: 50px/50px;
+}
+
+.dataTable-note {
+    margin-top: 40px;
+    border-radius: 20px;
+    padding: 10px 10px 2px 10px;
+    text-align: center;
+}
+
+.account-signout-button {
+    border: 1.5px #da8484 solid;
+    border-radius: 45px;
+}
+
+.bg-primary-btn {
+    background-color: #6197f7;
     color: white;
 }

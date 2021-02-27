@@ -1,10 +1,16 @@
 ﻿@model BakalarPrace.Models.Record
+<script>
+    $(document).ready(function () {
+        $('#js_dataTable').hide();
+    });
+</script>
+    
 <h1 class="text-center"> Detailní výpis záznamu </h1>
 <div class="row justify-content-center">
     <div class="col-auto mx-auto">
         <table class="text-center table table-responsive">
             <tr>
-                <td>Název souboru:</td>
+                <td>Název záznamu:</td>
                 <td> @Model.Name</td>
             </tr>
             <tr>
@@ -23,7 +29,7 @@
     </div>
 </div>
 
-<a asp-action="Imports" asp-controller="Admin" class="btn bg-info"> Zpět na souhrn </a>
+<a asp-action="Imports" asp-controller="Admin" class="btn bg-primary-btn"> Zpět na souhrn </a>
 <br />
 <br />
 <div class="box">
@@ -283,16 +289,25 @@
             <td> @row.Pole15_Hodnota </td>
             <td> @row.Pole16 </td>
             <td> @row.Pole16_Hodnota </td>
-        </tr> } }
+        </tr>
+} }
             </tbody>
         </table>
-    </div>  
+    </div>
+    <div class="row">
+        <div class="bg-warning dataTable-note">
+            <p> Kliknutím na libovolný řádek v tabulce je možné řádek označit. Opětovným kliknutím na označený řádek lze označení odstranit. Označit lze libovolný počet řádků. </p>
+        </div>
+    </div>
+
 </div>
 @section Scripts{
     <script type="text/javascript" charset="utf8" src="~/lib/dataTables/datatables.min.js"></script>
-    <script>$(document).ready(function () {
+    <script>
+        $(document).ready(function () {
             $('#js_dataTable').DataTable();
-        });</script>
+            $('#js_dataTable').fadeIn("fast");
+        });
+    </script>
 }
 
-    

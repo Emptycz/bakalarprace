@@ -1,10 +1,10 @@
 ﻿@model BakalarPrace.Models.Uploader
 
 @{
-    ViewData["Title"] = "Uploader";
+    ViewData["Title"] = "Vložení záznamu";
 }
 
-<h1>Uploader</h1>
+<h1>Vložení nového záznamu</h1>
 
 <hr />
 <div class="row">
@@ -45,7 +45,7 @@
                     V pořádku
                 </div>
                 <div class="invalid-feedback">
-                    Je třeba vložit soubor s koncovkou CSV
+                    Je třeba vložit soubor s příponou CSV
                 </div>
             </div>
             <div class="form-group">
@@ -63,15 +63,17 @@
                     Vyplňte prosím toto pole
                 </div>
             </div>
+            <div class="float-left">
+                <a asp-action="Imports" asp-controller="Admin">Zpět na rozpis záznamů</a>
+            </div>
             <div class="form-group float-right">
-                <input type="submit" value="Nahrát záznam" class="btn btn-primary js_submitImport" />
+                <input type="submit" value="Nahrát záznam" class="btn bg-primary-btn js_submitImport" />
+            </div>
+            <div class="js_progress progress float-left">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Imports" asp-controller="Admin">Zpět na rozpis záznamů</a>
 </div>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields

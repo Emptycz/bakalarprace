@@ -20,7 +20,7 @@ namespace BakalarPrace.Models
         public Uploader()
         {
             FileName = "Název souboru";
-            Status = "Čekám na upload";
+            Status = "Čekám na vložení souboru a odeslání formuláře";
             AlertStatus = "alert-info";
         }
 

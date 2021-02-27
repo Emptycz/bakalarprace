@@ -129,6 +129,7 @@ namespace BakalarPrace.Controllers
                     {
                         LogMessage lm = new LogMessage("Zpracování CSV", "500", "Nebylo možné přečíst CSV soubor. Zkustě jiný oddělovač", "Error");
                         new Alerter(lm, HttpContext);
+                        
                     }
                     else
                     {
@@ -137,7 +138,16 @@ namespace BakalarPrace.Controllers
                     }
                     //Odstraň CSV soubor
                     uploader.Delete();
-                    return RedirectToAction("Imports", "Admin");
+                    if(importDoneCorrectly == true)
+                    {
+                        return RedirectToAction("Imports", "Admin");
+                    }
+                    else
+                    {
+                        uploader.AlertStatus = "bg-danger";
+                        uploader.Status = "Došlo k chybě při zpracování souboru";
+                        return View(uploader);
+                    }
                 }
                 else
                 {
