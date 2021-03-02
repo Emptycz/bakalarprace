@@ -13,10 +13,11 @@ using CsvHelper;
 using BakalarPrace.ExceptionModel;
 using BakalarPrace.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BakalarPrace.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ViewLayout("_UserLayout")]
     public class UploaderController : Controller
     {

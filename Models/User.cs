@@ -12,13 +12,13 @@ namespace BakalarPrace.Models
         private int _id;
         private string _lastname;
         private string _email;
-        private string _level;
+        private string _level = "User";
         private string _password;
         private string _username;
 
         public User()
         {
-
+            
         }
 
         public User(int id, string fname, string sname, string email, string level)
@@ -59,6 +59,18 @@ namespace BakalarPrace.Models
         public void HashPassword()
         {
             this.Password = Hasher.ComputeSha256Hash(this.Password);
+        }
+
+        public bool IsAdmin()
+        {
+            if(this.Level == "Admin")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public int ID { get { return _id; } set { _id = value; } }

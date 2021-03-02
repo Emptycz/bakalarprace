@@ -1,30 +1,46 @@
 ﻿
-<div class="mx-auto">
-    <h1 class="text-center"> Vyhledávání dle parametrů </h1>
-</div>
-<form method="post">
-    @{ 
-        foreach(string property in ViewBag.ClassProperties)
-        {
-            string item;
-            <div class="mb-3">
-                <label value="@property"> @property </label>
-                @{ 
-                    if (property.Contains("_Advanced") || property.Contains("_advanced"))
+<div class="col-10 offset-1 col-md-6 col-lg-4 offset-md-3 offset-lg-4">
+    <h1 class="text-center"> Vytvoření nového účtu </h1>
+    <form class="needs-validation" novalidate method="post" asp-action="Register" asp-controller="Account">
+        <div class="form-group row">
+
+            @{ 
+                int i = 0;
+                foreach (string property in ViewBag.ClassProperties)
+                {
+                    i++; //přidej + 1 k iteraci
+                    string item;
+                    string odd = "";
+                    if(i%2 == 0) //získej sudá a lichá čísla
                     {
-                        string[] prop = property.Split("_Advanced");
-                        item = prop[0] + "+/-";
+                        //je sudé
+                        odd = "margin-left-10";
                     }
                     else
                     {
-                        item = property;
+                        odd = "";
                     }
+
+                    <div class="col-5 input-box @odd">
+                        <label value="@property"> @property </label>
+                        @{
+                            if (property.Contains("_Advanced") || property.Contains("_advanced"))
+                            {
+                                string[] prop = property.Split("_Advanced");
+                                item = prop[0] + "+/-";
+                            }
+                            else
+                            {
+                                item = property;
+                            } 
+                        }
+                        <input type="text" name="@item" />
+                    </div>
                 }
-                <input type="text" name="@item" />
-            </div>
-        }
-    }
-</form>
+             }
+        </div>
+    </form>
+</div>
 
 
 

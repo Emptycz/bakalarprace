@@ -116,6 +116,48 @@ namespace BakalarPrace.Data
             }
         }
 
+        public List<User> GetAllUsers()
+        {
+            using (var db = new AppDb())
+            {
+                db.Connection.Open();
+                try
+                {
+                    using (var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "SELECT ID, Firstname, Surname, Email, Level FROM user;";
+                        var reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            int id;
+                            string fname;
+                            string sname;
+                            string email;
+                            string level;
+                            List<User> usrs = new List<User>();
+                            while (reader.Read())
+                            {
+                                try { id = reader.GetInt32(0); } catch (Exception) { id = 0; }
+                                try { fname = reader.GetString(1); } catch (Exception) { fname = null; }
+                                try { sname = reader.GetString(2); } catch (Exception) { sname = null; }
+                                try { email = reader.GetString(3); } catch (Exception) { email = null; }
+                                try { level = reader.GetString(4); } catch (Exception) { level = null; }
+                                usrs.Add(new User(id, fname, sname, email, level));
+                            }
+                            return usrs;
+                        }
+                        return new List<User>();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Došlo k chybě při získání uživatele z databáze: " + ex.Message);
+                    return new List<User>();
+                }
+            }
+        }
+
         public User GetUserByEmail(string Email)
         {
             using (var db = new AppDb())
@@ -172,7 +214,7 @@ namespace BakalarPrace.Data
                         cmd.Parameters.AddWithValue("@password", user.Password);
                         cmd.Parameters.AddWithValue("@fname", user.Firstname);
                         cmd.Parameters.AddWithValue("@sname", user.Lastname);
-                        cmd.Parameters.AddWithValue("@level", "User");
+                        cmd.Parameters.AddWithValue("@level", user.Level);
                         var reader = cmd.ExecuteNonQuery();
                         return true;
                     }
@@ -180,6 +222,35 @@ namespace BakalarPrace.Data
                 catch (Exception ex)
                 {
                     Console.WriteLine("Nastala chyba při registrace uživatele: " + ex.Message);
+                    return false;
+                }
+            }
+        }
+        public bool VerifyRecordOwner(int userId)
+        {
+            using(var db = new AppDb())
+            {
+                db.Connection.Open();
+                try
+                {
+                    using(var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "SELECT 1 FROM Record WHERE AuthorID = @aid";
+                        cmd.Parameters.AddWithValue("@aid", userId);
+                        var reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                     return false;
                 }
             }
@@ -345,6 +416,53 @@ namespace BakalarPrace.Data
             }
         }
 
+        public List<Record> GetAllRecords()
+        {
+
+            using (var db = new AppDb())
+            {
+                db.Connection.Open();
+                try
+                {
+                    using (var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "SELECT ID, AuthorID, Uploaded, Location, Name FROM record ORDER BY ID DESC";
+                        var reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            List<Record> records = new List<Record>();
+                            int Id;
+                            int Aid;
+                            DateTime Uploaded;
+                            string Loc;
+                            string Name;
+                            while (reader.Read())
+                            {
+                                try { Id = reader.GetInt32(0); } catch (Exception) { Id = 0; }
+                                try { Aid = reader.GetInt32(1); } catch (Exception) { Aid = 0; }
+                                try { Uploaded = reader.GetDateTime(2); } catch (Exception) { Uploaded = DateTime.Now; }
+                                try { Loc = reader.GetString(3); } catch (Exception) { Loc = null; }
+                                try { Name = reader.GetString(4); } catch (Exception) { Name = null; }
+
+                                records.Add(new Record(Id, Name, Aid, Uploaded, Loc));
+                            }
+                            return records;
+                        }
+                        else
+                        {
+                            return new List<Record>();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Nastala chyba při výpisu records: " + ex.Message);
+                    return new List<Record>();
+                }
+            }
+        }
+
         public Record GetDetailedRecord(int recordId)
         {
             if (this.VerifyRecordExistenceById(recordId) == false)
@@ -398,12 +516,55 @@ namespace BakalarPrace.Data
 
         public LogMessage RemoveReport(int recordId)
         {
+            if (this.VerifyRecordExistenceById(recordId) == false)
+            {
+                return new LogMessage("Odstranění záznamu", "404", "Tento záznam nebyl v databázi nalezen", "Error");
+            }
+
+            using (var db = new AppDb())
+            {
+                db.Connection.Open();
+                try
+                {
+                    using (var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "DELETE FROM CSV WHERE CSV.RecordID = @recordId";
+                        cmd.Parameters.AddWithValue("@recordId", recordId);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "DELETE FROM Record WHERE Record.ID = @recordId";
+                        cmd.Parameters.AddWithValue("@recordId", recordId);
+                        cmd.ExecuteNonQuery();
+                    }
+                    return new LogMessage("Odstranění záznamu", "200", "Záznam byl úspěšně odstraněn", "OK");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return new LogMessage("Odstranění záznamu", "500", "Nastala chyba při odstranění záznamu", "ERROR");
+                }
+            }
+        }
+
+
+        public LogMessage RemoveUserReport(int recordId, int userId)
+        {
             if(this.VerifyRecordExistenceById(recordId) == false)
             {
                 return new LogMessage("Odstranění záznamu", "404", "Tento záznam nebyl v databázi nalezen", "Error");
             }
 
-            using(var db = new AppDb())
+            if (this.VerifyRecordOwner(userId) == false)
+            {
+                return new LogMessage("Odstranění záznamu", "500", "Tento záznam může odstranit pouze jeho autor", "Error");
+            }
+
+            using (var db = new AppDb())
             {
                 db.Connection.Open();
                 try
@@ -431,7 +592,75 @@ namespace BakalarPrace.Data
                 }
             }
         }
-            
+
+        public bool CheckForAdminUser()
+        {
+            using (var db = new AppDb())
+            {   
+                db.Connection.Open();
+                try
+                {
+                    using (var  cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "SELECT 1 FROM user WHERE Level = @lvl";
+                        cmd.Parameters.AddWithValue("@lvl", "Admin");
+                        var reader = cmd.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return false;
+                }
+            }
+        }
+
+        public LogMessage RemoveUser(int userId)
+        {
+            if (this.VerifyUserExistenceByID(userId) == false)
+            {
+                return new LogMessage("Odstranění uživatele", "404", "Tento uživatel nebyl v databázi nalezen", "Error");
+            }
+
+            using (var db = new AppDb())
+            {
+                db.Connection.Open();
+                try
+                {
+                    using (var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "DELETE FROM user WHERE user.ID = @id";
+                        cmd.Parameters.AddWithValue("@id", userId);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (var cmd = new MySqlCommand())
+                    {
+                        cmd.Connection = db.Connection;
+                        cmd.CommandText = "DELETE FROM CSV WHERE RecordID IN ((SELECT ID FROM Record WHERE AuthorID = @id)); DELETE FROM Record WHERE AuthorID = @id;";
+                        cmd.Parameters.AddWithValue("@id", userId);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    return new LogMessage("Odstranění uživatele", "200", "Uživatel byl úspěšně odstraněn", "OK");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return new LogMessage("Odstranění uživatele", "500", "Nastala chyba při pokusu o odstranění uživatele", "ERROR");
+                }
+            }
+        }
+
         public LogMessage AddReport(int userId, string name, string location, List<CsvRow> csv)
         {
             using(var db = new AppDb())

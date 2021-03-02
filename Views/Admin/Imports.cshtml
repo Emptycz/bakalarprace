@@ -1,7 +1,7 @@
 ﻿<div class="mx-auto">
     <h1 class="text-center"> Seznam nahraných záznamů </h1>
-</div>   
-<a class="btn bg-primary-btn" asp-action="Upload" asp-controller="Uploader"> Přidat záznam </a>
+</div>
+
 <table class="table margin-top-10">
     <thead>
         <tr>
@@ -14,24 +14,21 @@
         </tr>
     </thead>
     <tbody>
-        @{ 
-            foreach(Record rc in ViewBag.Records)
-            {
-                <tr>
-                    <td> @rc.ID </td>
-                    <td> @rc.Name </td>
-                    <td> @rc.Author.Firstname @rc.Author.Lastname</td>
-                    <td> @rc.Uploaded </td>
-                    <td> @rc.Location </td>
-                    <td>
-                        <a class="btn" href="/User/ShowRecord?RecordId=@rc.ID" data-toggle="tooltip" data-placement="top" title="Zobrazit CSV záznam"> <i class="material-icons" style="color: green"> zoom_out_map </i> </a>
-                        <a class="btn js_openModal" href="/User/RemoveRecord?RecordId=@rc.ID" data-id="@rc.ID" data-toggle="modal" data-target="#exampleModalCenter"> <i class="material-icons" style="color: red"> clear </i> </a>
-                    </td>
-                </tr>
-            }
-        }
+        @{ foreach (Record rc in ViewBag.Records)
+                        {
+            <tr>
+                <td> @rc.ID </td>
+                <td> @rc.Name </td>
+                <td> @rc.Author.Firstname @rc.Author.Lastname</td>
+                <td> @rc.Uploaded </td>
+                <td> @rc.Location </td>
+                <td>
+                    
+                    <a class="btn js_openModal" href="/Admin/RemoveImport?RecordId=@rc.ID" data-id="@rc.ID" data-toggle="modal" data-target="#exampleModalCenter"> <i class="material-icons" style="color: red"> clear </i> </a>
+                </td>
+            </tr> } }
     </tbody>
-</table>  
+</table>
 
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -51,6 +48,6 @@
             </div>
         </div>
     </div>
-</div>  
+</div>
 
 

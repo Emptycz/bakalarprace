@@ -31,6 +31,14 @@ namespace BakalarPrace.Controllers
             return View();
         }
 
+        [Route("{*url}", Order = 999)]
+        public IActionResult Page_404()
+        {
+            Response.StatusCode = 404;
+            ViewBag.Message = "Stránka, kterou hledáte již není k dispozici.";
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -1,0 +1,53 @@
+﻿<div class="mx-auto">
+    <h1 class="text-center"> Seznam registrovaných uživatelů </h1>
+</div>
+
+<table class="table margin-top-10">
+    <thead>
+        <tr>
+            <th> ID Uživatele </th>
+            <th> Email </th>
+            <th> Jméno a příjmení </th>
+            <th> Úroveň oprávnění </th>
+            <th> Operace </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ 
+           foreach (User u in ViewBag.Users)
+           {
+               <tr>
+                   <td> @u.ID </td>
+                   <td> @u.Email </td>
+                   <td> @u.Firstname @u.Lastname </td>
+                   <td> @u.Level </td>
+                   <td>
+                       <a class="btn js_openModal" href="/Admin/RemoveUser?id=@u.ID" data-id="@u.ID" data-toggle="modal" data-target="#exampleModalCenter"> <i class="material-icons" style="color: red"> clear </i> </a>
+                   </td>
+               </tr>
+           } 
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Odstranit uživatele</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center text-danger"> Tuto akci nelze vrátit, opravdu ji chcete provést?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit akci</button>
+                <a class="btn btn-danger js_removeRecordButton" href="#!"> Odstranit uživatele </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -51,12 +51,19 @@ namespace BakalarPrace.Controllers
         [HttpGet]
         public IActionResult RemoveRecord(string RecordId)
         {
+            if (RecordId == null)
+            {
+                return RedirectToAction("Imports", "Admin");
+            }
+
             try
             {
                 int recordId = Int32.Parse(RecordId);
                 Database db = new Database();
+                var email = _signInManager.Context.User.Identity.Name;
+                User usr = db.GetUserByEmail(email);
 
-                LogMessage lm = db.RemoveReport(recordId);
+                LogMessage lm = db.RemoveUserReport(recordId, usr.ID);
                 new Alerter(lm, HttpContext);
 
                 return RedirectToAction("Imports", "User");

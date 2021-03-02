@@ -89,8 +89,6 @@ namespace BakalarPrace.Controllers
             {
                 return View(user);
             }
-            //await _userManager.CreateAsync(user, verifyPassword);
-           // return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
@@ -144,7 +142,14 @@ namespace BakalarPrace.Controllers
             //Přihlaš uživatele
             await _signInManager.SignInAsync(user, false);
             //await _signInManager.PasswordSignInAsync(user, user.Password, false, false);
-            return RedirectToAction("Index", "User");
+            if (user.IsAdmin())
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
+                return RedirectToAction("Index", "User");
+            }
         }
 
         [Authorize]
@@ -153,6 +158,11 @@ namespace BakalarPrace.Controllers
             await _signInManager.SignOutAsync();
             new Alerter("Byl jste úspěšně odhlášen.", "Info", HttpContext);
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

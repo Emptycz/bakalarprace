@@ -12,8 +12,8 @@ namespace BakalarPrace.Data
 
         public AppDb()
         {
-            Connection = new MySqlConnection("host=mysql;port=3306;user id=root;password=mysql;database=bachalor;");
-            //Connection = new MySqlConnection("host=127.0.0.1;port=3306;user id=root;password=mysql;database=bachalor;");
+            //Connection = new MySqlConnection("host=mysql;port=3306;user id=root;password=mysql;database=bachalor;");
+            Connection = new MySqlConnection("host=127.0.0.1;port=3306;user id=root;password=mysql;database=bachalor;");
         }
 
         public void Dispose()
