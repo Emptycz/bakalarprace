@@ -1,4 +1,7 @@
-﻿@using static BakalarPrace.Extensions.NavSelector
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject BakalarPrace.Services.Alerter Alerter
+@using static BakalarPrace.Extensions.NavSelector
+@using static BakalarPrace.Extensions.LegacyCookieExtension
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,13 +24,18 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <div class="navbar-collapse collapse d-sm-inline-flex">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark @Html.IsSelected(actions: "Index", controllers: "Admin")" asp-area="" asp-controller="Admin" asp-action="Index"> Rozcestník </a>
+                            <a class="nav-link text-dark @Html.IsSelected(actions: "Index", controllers: "User")" asp-area="" asp-controller="User" asp-action="Index"> Rozcestník </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark @Html.IsSelected(actions: "Imports", controllers: "Admin")" asp-area="" asp-controller="Admin" asp-action="Imports"> Importy </a>
+                            <a class="nav-link text-dark @Html.IsSelected(actions: "Imports", controllers: "User")" asp-area="" asp-controller="User" asp-action="Imports"> Importy </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav float-right">
+                        <li class="nav-item">
+                            <a class="account-signout-button nav-link text-dark @Html.IsSelected(actions: "SignOut", controllers: "Account")" asp-area="" asp-controller="Account" asp-action="SignOut"> <i class="material-icons float-left text-danger icon_signOut"> power_settings_new </i> Odhlásit se </a>
                         </li>
                     </ul>
                 </div>
@@ -38,11 +46,35 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-    </div>
 
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
+        @{ if (HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"] != null)
+                        {
+                            var cookie = HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"].FromLegacyCookieString();
+
+            <div aria-live="polite" aria-atomic="true" style="position: absolute; right: 100px;">
+                <div id="toast" class="toast hide" role="alert" aria-live="assertive" data-autohide="false" aria-atomic="true">
+                    <div class="toast-header">
+                        <strong class="me-auto">@cookie["Title"]</strong>
+                        <button type="button" class="btn-close js_removeAlert" data-bs-dismiss="toast" aria-label="Close"> <i class="material-icons" style="font-size: 15px"> close </i></button>
+                    </div>
+                    <div class="toast-body">
+                        @cookie["Text"];
+                    </div>
+                </div>
+            </div> } }
+
+
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @{ if (HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"] != null)
+            {
+<script>
+    $(document).ready(function () {
+        $('#toast').toast('show');
+    });
+</script>
+ } }
+        <script>
         $(".js_markTableRow").on("click", function () {
             if ($(this).hasClass("marked")) {
                 $(this).removeClass("marked");
@@ -50,7 +82,16 @@
                 $(this).addClass("marked");
             }
         });
-    </script>
-    @RenderSection("Scripts", required: false)
+
+                        //Odstraň cookie
+        $('.js_removeAlert').on('click', function () {
+            //$.cookie("SystemResponse.Cookie", null, { path: '/' });
+            @{
+                HttpContextAccessor.HttpContext.Response.Cookies.Delete("SystemResponse.Cookie");
+            }
+            $('#toast').toast('dispose');
+        });
+        </script>
+        @RenderSection("Scripts", required: false)
 </body>
 </html>

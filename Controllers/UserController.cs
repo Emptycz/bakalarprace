@@ -20,11 +20,11 @@ using Microsoft.AspNetCore.Identity;
 namespace BakalarPrace.Controllers
 {
    [Authorize]
-   [ViewLayout("_AdminLayout")]
-    public class AdminController : Controller
+   [ViewLayout("_UserLayout")]
+    public class UserController : Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
-        public AdminController(SignInManager<IdentityUser> signInManager)
+        public UserController(SignInManager<IdentityUser> signInManager)
         {
             _signInManager = signInManager;
         }
@@ -59,11 +59,11 @@ namespace BakalarPrace.Controllers
                 LogMessage lm = db.RemoveReport(recordId);
                 new Alerter(lm, HttpContext);
 
-                return RedirectToAction("Imports", "Admin");
+                return RedirectToAction("Imports", "User");
             }catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return RedirectToAction("Imports", "Admin");
+                return RedirectToAction("Imports", "User");
             }
         }
 

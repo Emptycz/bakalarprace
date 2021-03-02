@@ -10,7 +10,7 @@
     <title>@ViewData["Title"] - BakalarPrace</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/admin.css" />
+    <link rel="stylesheet" href="~/css/user.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <script>
@@ -32,10 +32,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark @Html.IsSelected(actions: "Index", controllers: "Admin")" asp-area="" asp-controller="Admin" asp-action="Index"> Rozcestník </a>
+                            <a class="nav-link text-dark @Html.IsSelected(actions: "Index", controllers: "User")" asp-area="" asp-controller="User" asp-action="Index"> Rozcestník </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark @Html.IsSelected(actions: "Imports", controllers: "Admin")" asp-area="" asp-controller="Admin" asp-action="Imports"> Importy </a>
+                            <a class="nav-link text-dark @Html.IsSelected(actions: "Imports", controllers: "User")" asp-area="" asp-controller="User" asp-action="Imports"> Importy </a>
                         </li>                    
                     </ul>
                     <ul class="navbar-nav float-right">
@@ -100,7 +100,7 @@
                 //Při otevření modal okna u odstranění recordu, doplň dynamicky ID do Modal okna
                 $('.js_openModal').on('click', function () {
                     var id = $(this).attr('data-id');
-                    $('.js_removeRecordButton').attr('href', '/Admin/RemoveRecord?RecordId=' + id);
+                    $('.js_removeRecordButton').attr('href', '/User/RemoveRecord?RecordId=' + id);
                 });
 
                 //Odstraň cookie

@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Identity;
 namespace BakalarPrace.Controllers
 {
     //[Authorize]
-    [ViewLayout("_AdminLayout")]
+    [ViewLayout("_UserLayout")]
     public class UploaderController : Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -140,7 +140,7 @@ namespace BakalarPrace.Controllers
                     uploader.Delete();
                     if(importDoneCorrectly == true)
                     {
-                        return RedirectToAction("Imports", "Admin");
+                        return RedirectToAction("Imports", "User");
                     }
                     else
                     {

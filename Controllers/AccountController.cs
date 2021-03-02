@@ -48,7 +48,7 @@ namespace BakalarPrace.Controllers
 
                 if (User.IsInRole("User"))
                 {
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("Index", "User");
                 }
                 return View();
             }
@@ -144,7 +144,7 @@ namespace BakalarPrace.Controllers
             //Přihlaš uživatele
             await _signInManager.SignInAsync(user, false);
             //await _signInManager.PasswordSignInAsync(user, user.Password, false, false);
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Index", "User");
         }
 
         [Authorize]
