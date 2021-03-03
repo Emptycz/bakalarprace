@@ -1,5 +1,6 @@
 ﻿<div class="mx-auto">
     <h1 class="text-center"> Seznam nahraných záznamů </h1>
+    <p class="text-center"> Tabulka obsahuje seznam všech nahraných záznamů do aplikace. </p>
 </div>
 
 <table class="table margin-top-10">
@@ -24,7 +25,7 @@
                 <td> @rc.Location </td>
                 <td>
                     
-                    <a class="btn js_openModal" href="/Admin/RemoveImport?RecordId=@rc.ID" data-id="@rc.ID" data-toggle="modal" data-target="#exampleModalCenter"> <i class="material-icons" style="color: red"> clear </i> </a>
+                    <a class="btn js_openModal" href="/Admin/RemoveImport?RecordId=@rc.ID" data-id="@rc.ID" data-toggle="modal" data-target="#exampleModalCenter"> <i class="material-icons" style="color: red"> delete_forever </i> </a>
                 </td>
             </tr> } }
     </tbody>

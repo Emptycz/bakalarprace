@@ -12,12 +12,14 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/home.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Monoton' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
     <header>
         <nav class="navbar navbar-dark bg-dark navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BakalarPrace</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DCHV</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -66,7 +68,7 @@
                             <button type="button" class="btn-close js_removeAlert" data-bs-dismiss="toast" aria-label="Close"> <i class="material-icons" style="font-size: 15px"> close </i></button>
                         </div>
                         <div class="toast-body">
-                            @cookie["Text"];
+                            @cookie["Text"]
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,13 @@ namespace BakalarPrace.Controllers
         public IActionResult Index()
         {
             Database db = new Database();
-            if(db.CheckForAdminUser())
+            if (db.IsConnected == false)
+            {
+                new Alerter(new LogMessage("Spojení s databází přerušeno", "500", "Nelze navázat komunikaci s databází, restartujte prosím aplikaci", "Error"), HttpContext);
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (db.CheckForAdminUser())
             {
                 new Alerter(new LogMessage("Prvotní nastavení", "404", "Možnost prvotní nastavení je deaktivována, protože již existuje účet správce", "Error"),HttpContext);
                 return RedirectToAction("Index", "Home");
@@ -29,6 +35,12 @@ namespace BakalarPrace.Controllers
         public IActionResult SetAdmin()
         {
             Database db = new Database();
+            if (db.IsConnected == false)
+            {
+                new Alerter(new LogMessage("Spojení s databází přerušeno", "500", "Nelze navázat komunikaci s databází, restartujte prosím aplikaci", "Error"), HttpContext);
+                return RedirectToAction("Index", "Home");
+            }
+
             if (db.CheckForAdminUser())
             {
                 new Alerter(new LogMessage("Prvotní nastavení", "404", "Možnost prvotní nastavení je deaktivována, protože již existuje účet správce", "Error"), HttpContext);
@@ -70,7 +82,7 @@ namespace BakalarPrace.Controllers
             if (result)
             {
                 new Alerter(new LogMessage("Dokončení nastavení", "200", "Byl úspěšně vytvořen účet s oprávněním administrátora", "OK"), HttpContext);
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home");
             }
             else
             {

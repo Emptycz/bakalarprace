@@ -1,5 +1,6 @@
 ﻿<div class="mx-auto">
     <h1 class="text-center"> Seznam nahraných záznamů </h1>
+    <p class="text-center"> V této tabulce najdete všechny vaše záznamy, které jste úspěšně nahráli do aplikace a případně nesmazali.  </p>
 </div>   
 <a class="btn bg-primary-btn" asp-action="Upload" asp-controller="Uploader"> Přidat záznam </a>
 <table class="table margin-top-10">
@@ -25,7 +26,7 @@
                     <td> @rc.Location </td>
                     <td>
                         <a class="btn" href="/User/ShowRecord?RecordId=@rc.ID" data-toggle="tooltip" data-placement="top" title="Zobrazit CSV záznam"> <i class="material-icons" style="color: green"> zoom_out_map </i> </a>
-                        <a class="btn js_openModal" href="/User/RemoveRecord?RecordId=@rc.ID" data-id="@rc.ID" data-toggle="modal" data-target="#exampleModalCenter"> <i class="material-icons" style="color: red"> clear </i> </a>
+                        <a class="btn js_openModal" href="/User/RemoveRecord?RecordId=@rc.ID" data-id="@rc.ID" data-toggle="modal" data-target="#exampleModalCenter"> <i class="material-icons" style="color: red"> delete_forever </i> </a>
                     </td>
                 </tr>
             }

@@ -4,11 +4,29 @@
 }
 
 .nav-item {
-    min-width: 80px;
+    min-width: 100px;
     text-align: center;
+    margin: 0px 5px;
 }
 
 
 .nav-link {
     padding: .4rem 1rem;
+}
+
+.icon-large{
+    font-size: 120px !important;
+}
+
+.long-text {
+    line-height: 30px;
+}
+
+.author-pic{
+    width: 30%;
+    border-radius: 360px;
+    border: 1px solid black;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

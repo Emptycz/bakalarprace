@@ -5,6 +5,7 @@
 .nav-item {
     min-width: 80px;
     text-align: center;
+    margin: 0px 5px;
 }
 
 
@@ -14,10 +15,6 @@
 
 .icon_signOut{
     margin-right: 10px;
-}
-
-.account-signout-button:hover {
-    border-color: red;
 }
 
 .margin-left-10 {

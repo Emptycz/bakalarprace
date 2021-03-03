@@ -1,14 +1,16 @@
 ﻿<div class="row">
-    <div class="col"></div>
-    <div class="col-8 mx-auto text-justify">
-        <h1 class="text-center"> Chyba 404 </h1>
-        <h3 class="text-center" style="margin-top: 5vh; font-family:'Segoe UI'"> @ViewBag.Message </h3>
-        <div class="text-center" style="margin-top: 3vh;">
-            <a class="btn btn-primary" style="color: white;" asp-action="Index" asp-controller="Home"> Zpět do aplikace </a>
+    <div class="col">
+        <h1 class="text-center"> Tato stránka nebyla nalezena </h1>
+        <p class="text-center"> <i class="material-icons icon-large text-warning"> warning_amber </i></p>
+        <p class="text-center"> @ViewBag.Message </p>
+        <div class="row">
+            <div class="col-4 offset-4">
+                <a class="btn bg-primary-btn full-width-button" asp-action="Index" asp-controller="Home"> Zpět do aplikace </a>
+            </div>
         </div>
     </div>
-    <div class="col"></div>
 </div>
+
 
 
 

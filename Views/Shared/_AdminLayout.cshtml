@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="~/css/admin.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Monoton' rel='stylesheet' type='text/css'>
+
     <script>
         //skryj všechny progress bary při načtení stránky
         $(document).ready(function () {
@@ -24,15 +26,15 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BakalarPrace</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DCHV</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            
+                        <li class="nav-item nav-item-selected">
+                            Administrační rozhraní
                         </li>
                     </ul>
                     <ul class="navbar-nav float-right">
@@ -45,35 +47,32 @@
         </nav>        
     </header>
     <div class="row">
-        <div class="col-sm-2 sidenav-box bg-dark">
+        <div class="col-sm-2 sidenav-box">
             <ul class="nav flex-column">
                 <li class="nav-item @Html.IsSelected(actions: "Index", controllers: "Admin")">
                     <a class="nav-link"
                        asp-area="" asp-controller="Admin" asp-action="Index">
-                        <i class="material-icons"
-                           style="float: left; margin:0px 15px"> fact_check </i> Dashboard
+                        <i class="material-icons sidenav-icon"> fact_check </i> Dashboard
                     </a>
                 </li>
                 <li class="nav-item @Html.IsSelected(actions: "Users", controllers: "Admin")">
                     <a class="nav-link"
                        asp-area="" asp-controller="Admin" asp-action="Users">
-                        <i class="material-icons"
-                           style="float: left; margin:0px 15px"> supervised_user_circle </i> Uživatelé
+                        <i class="material-icons sidenav-icon"> supervised_user_circle </i> Uživatelé
                     </a>
                 </li>
                 <li class="nav-item @Html.IsSelected(actions: "Imports", controllers: "Admin")">
                     <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Imports">
-                        <i class="material-icons" style="float: left; margin:0px 15px"> star </i> Importované záznamy
+                        <i class="material-icons sidenav-icon"> star </i> Záznamy
                     </a>
                 </li>
 
             </ul>
         </div>
-        <main role="main" class="pb-3 col">
+        <main role="main" class="col-8 contentPage">
             @RenderBody()
         </main>
-        <div class="col">
-        </div>
+
 
             @{
             if (HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"] != null)
@@ -87,7 +86,7 @@
                             <button type="button" class="btn-close js_removeAlert" data-bs-dismiss="toast" aria-label="Close"> <i class="material-icons" style="font-size: 15px"> close </i></button>
                         </div>
                         <div class="toast-body">
-                            @cookie["Text"];
+                            @cookie["Text"]
                         </div>
                     </div>
                 </div>

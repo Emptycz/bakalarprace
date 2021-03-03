@@ -22,6 +22,22 @@ namespace BakalarPrace.Controllers
         public IActionResult Index()
         {
             Database db = new Database();
+            if(db.IsConnected == false)
+            {
+                //zatim nedelej nic
+            }
+            else
+            {
+                if (db.CheckForAdminUser())
+                {
+                    ViewBag.IsAdminCreated = true;
+                }
+                else
+                {
+                    ViewBag.IsAdminCreated = false;
+                }
+            }
+           
             ViewBag.Message = db.Message;
             return View();
         }
@@ -31,11 +47,16 @@ namespace BakalarPrace.Controllers
             return View();
         }
 
+        public IActionResult About()
+        {
+            return View();
+        }
+
         [Route("{*url}", Order = 999)]
         public IActionResult Page_404()
         {
             Response.StatusCode = 404;
-            ViewBag.Message = "Stránka, kterou hledáte již není k dispozici.";
+            ViewBag.Message = "Stránka, kterou hledáte, již není k dispozici.";
             return View();
         }
 

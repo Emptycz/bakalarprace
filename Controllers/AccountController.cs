@@ -65,14 +65,20 @@ namespace BakalarPrace.Controllers
         [HttpPost]
         public IActionResult Register(User user, string verifyPassword)
         {
-            
-            if(user.Password != verifyPassword)
+
+            Database db = new Database();
+            if (db.IsConnected == false)
+            {
+                user.Message = "Není možné navázat spojení s databází. Kontaktujte prosím administrátora.";
+                return View(user);
+            }
+
+            if (user.Password != verifyPassword)
             {
                 user.Message = "Hesla se neshodují!";
                 return View(user);
             }
             user.HashPassword();
-            Database db = new Database();
 
             if (db.VerifyUserExistenceByEmail(user.Email) == true)
             {
@@ -101,6 +107,11 @@ namespace BakalarPrace.Controllers
             }
 
             Database db = new Database();
+            if(db.IsConnected == false)
+            {
+                ViewBag.Message = "Není možné navázat spojení s databází. Kontaktujte prosím administrátora.";
+                return View();
+            }
             string pswd = Hasher.ComputeSha256Hash(password);
             //Získání záznamu uživatele z db
             User user = db.LoginUser(username, pswd);

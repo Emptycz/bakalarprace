@@ -13,13 +13,16 @@
     <link rel="stylesheet" type="text/css" href="~/lib/dataTables/datatables.min.css" />
     <link rel="stylesheet" type="text/css" href="~/css/csvTable.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/user.css" />
+    <link href='https://fonts.googleapis.com/css?family=Monoton' rel='stylesheet' type='text/css'>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BakalarPrace</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DCHV</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,7 +33,7 @@
                             <a class="nav-link text-dark @Html.IsSelected(actions: "Index", controllers: "User")" asp-area="" asp-controller="User" asp-action="Index"> Rozcestník </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark @Html.IsSelected(actions: "Imports", controllers: "User")" asp-area="" asp-controller="User" asp-action="Imports"> Importy </a>
+                            <a class="nav-link text-dark @Html.IsSelected(actions: "Imports", controllers: "User")" asp-area="" asp-controller="User" asp-action="Imports"> Vaše záznamy </a>
                         </li>
                     </ul>
                     <ul class="navbar-nav float-right">
@@ -58,7 +61,7 @@
                         <button type="button" class="btn-close js_removeAlert" data-bs-dismiss="toast" aria-label="Close"> <i class="material-icons" style="font-size: 15px"> close </i></button>
                     </div>
                     <div class="toast-body">
-                        @cookie["Text"];
+                        @cookie["Text"]
                     </div>
                 </div>
             </div> } }

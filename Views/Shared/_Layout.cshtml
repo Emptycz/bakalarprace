@@ -7,17 +7,25 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BakalarPrace</title>
+    <title>@ViewData["Title"] - Databáze chemických vzorků</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/home.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Monoton' rel='stylesheet' type='text/css'>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        //Inicializace Modal
+        $('#exampleModalCenter').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        });
+    </script>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-dark bg-dark navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BakalarPrace</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DCHV</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -25,10 +33,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item text-light @Html.IsSelected(actions: "Index", controllers: "Home")">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Domů</a>
                         </li>
-                        <li class="nav-item text-light @Html.IsSelected(actions: "Privacy", controllers: "Home")">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item text-light @Html.IsSelected(actions: "About", controllers: "Home")">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">O aplikaci</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav float-right">
@@ -66,7 +74,7 @@
                             <button type="button" class="btn-close js_removeAlert" data-bs-dismiss="toast" aria-label="Close"> <i class="material-icons" style="font-size: 15px"> close </i></button>
                         </div>
                         <div class="toast-body">
-                            @cookie["Text"];
+                            @cookie["Text"]
                         </div>
                     </div>
                 </div>
@@ -76,12 +84,11 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - BakalarPrace - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <p class="text-center"> Pro zaručení funkčnosti, aplikace využívá cookies. Používáním aplikace souhlasíte s aplikováním cookies. <a asp-area="" asp-controller="Home" asp-action="Privacy">Více o cookies se dozvíte zde</a> </p>
         </div>
 
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @{
@@ -94,6 +101,7 @@
             </script>
         }
     }
+
     <script>
          //Odstraň cookie
         $('.js_removeAlert').on('click', function () {
@@ -103,6 +111,7 @@
             }
             $('#toast').toast('dispose');
         });
+
     </script>
     @RenderSection("Scripts", required: false)
 </body>

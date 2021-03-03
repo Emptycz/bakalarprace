@@ -1,1 +1,38 @@
-﻿
+﻿.sidenav-box {
+    font-size: 22px;
+}
+
+    .sidenav-box li {
+        text-align: left;
+        margin: 5px;
+        
+        color: white;
+        background-color: #343a40;
+        border-radius: 45px;
+    }
+
+        .sidenav-box li a {
+            color: white;
+            font-weight: bold;
+            text-align:left;
+        }
+
+.sidenav-icon {
+    vertical-align: middle;
+    float:left;
+    margin: 5px 10px 0px 0px;
+    color: white;
+}
+
+.row {
+    margin: 0 auto;
+}
+
+.contentPage {
+    margin-left: 5vw;
+}
+
+.nav-item-selected {
+    border-bottom: 3px solid #343a40;
+    margin-left: 1vw;
+}

@@ -44,7 +44,7 @@
             <div class="form-group row">
                 <div class="col-12 input-box">
                     <label for="pswd"> Vaše heslo </label>
-                    <input id="pswd" class="form-control input-field" type="password" placeholder="Heslo" asp-for="@Model.Password" required />
+                    <input id="pswd" class="form-control input-field" type="password" min="5" placeholder="Heslo" asp-for="@Model.Password" required />
                     <div class="valid-feedback">
                         V pořádku
                     </div>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-12 input-box">
                     <label for="repswd"> Zopakujte Vaše heslo </label>
-                    <input for="repswd" class="form-control input-field" type="password" placeholder="Znovu heslo" name="verifyPassword" required />
+                    <input for="repswd" class="form-control input-field" type="password" min="5" placeholder="Znovu heslo" name="verifyPassword" required />
                     <div class="valid-feedback">
                         V pořádku
                     </div>

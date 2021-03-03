@@ -22,6 +22,7 @@ namespace BakalarPrace.Data
         {
             //Zkontroluj připojení k DB
             this._verifyConnection();
+
         }
 
         public List<Record> GetFourLatestRecords(int authorId)
@@ -126,7 +127,7 @@ namespace BakalarPrace.Data
                     using (var cmd = new MySqlCommand())
                     {
                         cmd.Connection = db.Connection;
-                        cmd.CommandText = "SELECT ID, Firstname, Surname, Email, Level FROM user;";
+                        cmd.CommandText = "SELECT ID, Firstname, Surname, Email, Level FROM user ORDER BY ID DESC;";
                         var reader = cmd.ExecuteReader();
                         if (reader.HasRows)
                         {
