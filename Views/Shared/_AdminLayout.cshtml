@@ -74,39 +74,40 @@
         </main>
 
 
-            @{
-            if (HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"] != null)
-            {
-                var cookie = HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"].FromLegacyCookieString();
+        @{
+        if (HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"] != null)
+        {
+            var cookie = HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"].FromLegacyCookieString();
 
-                <div aria-live="polite" aria-atomic="true" style="position: absolute; right: 100px;">
-                    <div id="toast" class="toast hide" role="alert" aria-live="assertive" data-autohide="false" aria-atomic="true">
-                        <div class="toast-header">
-                            <strong class="me-auto">@cookie["Title"]</strong>
-                            <button type="button" class="btn-close js_removeAlert" data-bs-dismiss="toast" aria-label="Close"> <i class="material-icons" style="font-size: 15px"> close </i></button>
-                        </div>
-                        <div class="toast-body">
-                            @cookie["Text"]
-                        </div>
+            <div aria-live="polite" aria-atomic="true">
+                <div id="toast" class="toast hide notification" role="alert" aria-live="assertive" data-autohide="false" aria-atomic="true">
+                    <div class="toast-header bg-dark text-white">
+                        <strong class="me-auto">@cookie["Title"]</strong>
+                        <button type="button" class="btn-close js_removeAlert toast-close-button " data-bs-dismiss="toast" aria-label="Close"> <i class="material-icons" style="font-size: 15px"> close </i></button>
+                    </div>
+                    <div class="toast-body">
+                        <p>@cookie["Text"]</p>
+                        <span class="badge @cookie["Class"]"> @cookie["Status"] </span>
                     </div>
                 </div>
-            }
-            }
+            </div>
+        }
+        }
 
-            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-            @{
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @{
             if (HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"] != null)
             {
-                <script>
-                    $(document).ready(function () {
-                        $('#toast').toast('show');
-                    });
-                </script>
-            }
-            }
-
             <script>
+                $(document).ready(function () {
+                    $('#toast').toast('show');
+                });
+            </script>
+            }
+        }
+
+        <script>
             $(document).ready(function () {
 
                 //Inicializace Tooltip
@@ -137,8 +138,8 @@
 
             });
 
-            </script>
-            @RenderSection("Scripts", required: false)
-        </div>
+        </script>
+        @RenderSection("Scripts", required: false)
+    </div>
 </body>
 </html>

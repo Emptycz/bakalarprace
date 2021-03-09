@@ -29,6 +29,7 @@ namespace BakalarPrace.Services
             _http = http;
             this._setClass();
 
+            this._setType();
             this._createMessage();
         }
 
@@ -38,7 +39,9 @@ namespace BakalarPrace.Services
             Status = stat;
             this._setClass();
             _http = http;
+            Title = "Oznámení aplikace";
 
+            this._setType();
             this._createMessage();
         }
 
@@ -50,6 +53,7 @@ namespace BakalarPrace.Services
             _http = http;
             Title = lm.Name;
 
+            this._setType();
             this._createMessage();
         }
         public bool CheckMessageExistence()
@@ -100,29 +104,53 @@ namespace BakalarPrace.Services
 
         }
 
+        private void _setType()
+        {
+            switch (this.Status.ToLower())
+            {
+                case "ok":
+                    this.Status = "Operace proběhla úspěšně";
+                    break;
+
+                case "error":
+                    this.Status = "Došlo k chybě při provedení operace";
+                    break;
+
+                case "warning":
+                    this.Status = "Upozornění";
+                    break;
+
+                case "info":
+                case "note":
+                    this.Status = "Systémová notifikace";
+                    break;
+            }
+        }
+
         private void _setClass()
         {
             switch (this.Status.ToLower())
             {
                 case "ok":
                 case "OK":
-                    this.Class = "bg-success";
+                    this.Class = "badge-success";
                     break;
 
                 case "error":
                 case "Error":
-                    this.Class = "bg-danger";
+                    this.Class = "badge-danger";
                     break;
 
                 case "warning":
                 case "Warning":
-                    this.Class = "bg-warning";
+                    this.Class = "badge-warning";
                     break;
 
+                case "info":
                 case "Note":
                 case "note":
                 default:
-                    this.Class = "bg-primary";
+                    this.Class = "badge-primary";
                     break;
             }
         }

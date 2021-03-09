@@ -30,3 +30,35 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.homepage-box {
+    width: 90%;
+    margin: 10px;
+    min-height: 300px;
+    border: 2px solid #212529;
+    border-radius: 20px;
+}
+
+    .homepage-box-header {
+        text-align:center;
+        min-height: 200px;
+        border-bottom: 0.5px solid black;
+
+    }
+
+    .homepage-box-header i{
+        font-size: 200px;
+    }
+
+    .homepage-box-body {
+        margin: 10px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+.homepage-box-logo {
+    font-size: 120px;
+    font-family: arial;
+    text-align: center;
+    color: #212529;
+}

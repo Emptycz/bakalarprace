@@ -1,47 +1,99 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@{ ViewData["Title"] = "Home Page"; }
 
-    <div class="row justify-content-center">
-        <div class="col-auto">
-            <div class="text-center">
-                <h1 class="display-4">Databáze chemických vzorků</h1>
-                <p> Stav připojení k DB: @ViewBag.Message</p>
-            </div>
-        </div>
-       
-    </div>
-
-    <div class="row">
-
-    </div>
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Provést prvotní nastavení aplikace</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p class="text-center"> Nebylo provedeno úvodní nastavení. Je doporučeno nastavit účet s možnostmi administrátora, než budete pokračovat dále do aplikace. </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit akci</button>
-                    <a class="btn btn-success js_removeRecordButton" asp-action="Index" asp-controller="Setup"> Přejít k nastavení </a>
-                </div>
-            </div>
+<div class="row justify-content-center margin-top-vh-20">
+    <div class="col-auto">
+        <div class="text-center">
+            <h1 class="display-4">Databáze chemických vzorků</h1>
+            <p> Stav připojení k DB: @ViewBag.Message</p>
         </div>
     </div>
-@{ 
-    if(ViewBag.IsAdminCreated == false)
-    {
-        <script>
-            $(document).ready(function () {
-                $('#exampleModalCenter').modal('show');
-            });
-        </script>
-    }
-}
+
+</div>
+
+<div class="row margin-top-50">
+    <div class="col-4 offset-2">
+        <a asp-action="Login" asp-controller="Account" class="btn bg-primary-btn full-width-button"> Přihlásit se </a>
+    </div>
+    <div class="col-4">
+        <a asp-action="Register" asp-controller="Account" class="btn bg-primary-btn full-width-button"> Vytvořit nový účet </a>
+    </div>
+</div>
+<hr />
+<div class="row margin-top-vh-20">
+    <div class="jumbotron">
+        <h1 class="display-4">Co je <span class="logo-family">DCHV</span></h1>
+        <p class="lead">Databáze chemických prvků, zkráceně DCHV, je aplikace ke správě CSV souborů.</p>
+        <hr class="my-4">
+        <p>
+            Účelem DCHV je nabídnout možnost uživateli evidovat a spravovat své CSV záznamy, v aktuální verzi pouze s konkrétním strukturou
+            a to strukturou obsahující chemické prvky. Ukázku požadované CSV stuktury naleznete zde.
+        </p>
+        <a class="btn btn-primary btn-lg" asp-controller="Home" asp-action="About" role="button">Více o aplikaci</a>
+    </div>
+</div> 
+<div class="row margin-top-vh-20">
+    <div class="col">
+        <h3 class="text-center text-capitalize"> Co nabízíme </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="homepage-box">
+            <div class="homepage-box-header">
+                <i class="material-icons"> calendar_view_month </i>
+            </div>
+            <div class="homepage-box-body">
+                <p> Moderně zpracované uživatelské rozhraní aplikace, které je jednoduché k použití.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="homepage-box">
+            <div class="homepage-box-header">
+                <p class="homepage-box-logo"> CSV </p>
+            </div>
+            <div class="homepage-box-body">
+                <p> Evidence a procházení CSV souborů se sloupci obsahující chemické prvky. </p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="homepage-box">
+            <div class="homepage-box-header">
+                <i class="material-icons"> filter_list </i>
+            </div>
+            <div class="homepage-box-body">
+                <p> Možnost filtrování a řazení dat v CSV souboru jediným kliknutím. </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Provést prvotní nastavení aplikace</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center"> Nebylo provedeno úvodní nastavení. Je doporučeno nastavit účet s možnostmi administrátora, než budete pokračovat dále do aplikace. </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit akci</button>
+                <a class="btn btn-success js_removeRecordButton" asp-action="Index" asp-controller="Setup"> Přejít k nastavení </a>
+            </div>
+        </div>
+    </div>
+</div>
+@{ if (ViewBag.IsAdminCreated == false)
+                {
+                    <script>
+                        $(document).ready(function () {
+                            $('#exampleModalCenter').modal('show');
+                        });
+                    </script>
+                } }
 

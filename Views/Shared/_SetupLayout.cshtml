@@ -61,14 +61,15 @@
             {
                 var cookie = HttpContextAccessor.HttpContext.Request.Cookies["SystemResponse.Cookie"].FromLegacyCookieString();
 
-                <div aria-live="polite" aria-atomic="true" style="position: absolute; right: 100px;">
-                    <div id="toast" class="toast hide" role="alert" aria-live="assertive" data-autohide="false" aria-atomic="true">
-                        <div class="toast-header">
+                <div aria-live="polite" aria-atomic="true">
+                    <div id="toast" class="toast hide notification" role="alert" aria-live="assertive" data-autohide="false" aria-atomic="true">
+                        <div class="toast-header bg-dark text-white">
                             <strong class="me-auto">@cookie["Title"]</strong>
-                            <button type="button" class="btn-close js_removeAlert" data-bs-dismiss="toast" aria-label="Close"> <i class="material-icons" style="font-size: 15px"> close </i></button>
+                            <button type="button" class="btn-close js_removeAlert toast-close-button " data-bs-dismiss="toast" aria-label="Close"> <i class="material-icons" style="font-size: 15px"> close </i></button>
                         </div>
                         <div class="toast-body">
-                            @cookie["Text"]
+                            <p>@cookie["Text"]</p>
+                            <span class="badge @cookie["Class"]"> @cookie["Status"] </span>
                         </div>
                     </div>
                 </div>

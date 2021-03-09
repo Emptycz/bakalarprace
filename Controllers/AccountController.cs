@@ -89,6 +89,7 @@ namespace BakalarPrace.Controllers
             bool result = db.RegisterUser(user);
             if (result)
             {
+                new Alerter("Účet úspěšně vytvořen", "Váš účet byl úspěšně vytvořen, nyní se můžete přihlásit.", "OK", HttpContext);
                 return RedirectToAction("Login", "Account");
             }
             else
@@ -153,6 +154,7 @@ namespace BakalarPrace.Controllers
             //Přihlaš uživatele
             await _signInManager.SignInAsync(user, false);
             //await _signInManager.PasswordSignInAsync(user, user.Password, false, false);
+            new Alerter("Vítejte zpět", "Byl jste úspěšně přihlášen, vítejte zpět uživateli "+user.Firstname +" "+user.Lastname, "OK", HttpContext);
             if (user.IsAdmin())
             {
                 return RedirectToAction("Index", "Admin");
@@ -167,7 +169,7 @@ namespace BakalarPrace.Controllers
         public async Task<IActionResult> SignOut()
         {
             await _signInManager.SignOutAsync();
-            new Alerter("Byl jste úspěšně odhlášen.", "Info", HttpContext);
+            new Alerter("Byl jste úspěšně odhlášen", "Info", HttpContext);
             return RedirectToAction("Index", "Home");
         }
 
